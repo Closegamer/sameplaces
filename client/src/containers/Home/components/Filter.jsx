@@ -27,19 +27,16 @@ let Filter = props => {
           </div>
 
           <Field
-            name='cat-health'
+            name='health'
             component={CheckBoxField}
             label={
-              <label
-                className='form-check-label white-text'
-                htmlFor='cat-health'
-              >
+              <label className='form-check-label white-text' htmlFor='health'>
                 Здоровье
               </label>
             }
           />
           <Field
-            name='cat-men'
+            name='men'
             component={CheckBoxField}
             label={
               <label className='form-check-label white-text' htmlFor='cat-men'>
@@ -48,25 +45,19 @@ let Filter = props => {
             }
           />
           <Field
-            name='cat-women'
+            name='women'
             component={CheckBoxField}
             label={
-              <label
-                className='form-check-label white-text'
-                htmlFor='cat-women'
-              >
+              <label className='form-check-label white-text' htmlFor='women'>
                 Для женщин
               </label>
             }
           />
           <Field
-            name='cat-banks'
+            name='banks'
             component={CheckBoxField}
             label={
-              <label
-                className='form-check-label white-text'
-                htmlFor='cat-banks'
-              >
+              <label className='form-check-label white-text' htmlFor='banks'>
                 Банки
               </label>
             }
@@ -89,6 +80,7 @@ let Filter = props => {
                 outline
                 className='btn-block z-depth-1'
                 type='reset'
+                onClick={handleSubmit}
               >
                 Очистить
               </MDBBtn>

@@ -61,22 +61,31 @@ router.post('/contribute', async (req, res) => {
 
 router.post('/filter', async (req, res) => {
   console.log('api playground filter ');
-  const categories = req.body.categories;
+  let categories = req.body.categories;
   console.log('categories: ', categories);
+
+  categories = Object.keys(categories);
+
+  console.log(categories);
+  const allCategories = await Categories.find();
 
   const query = [];
 
-  categories.forEach(category => {
-    if (category) {
-      query.push(category);
+  allCategories.forEach(category => {
+    for (var i = 0; i < categories.length; i++) {
+      if (category.nameEng === categories[i]) {
+        query.push(category.nameEng);
+      }
     }
   });
 
-  console.log(query);
   try {
-    const filteredGames = await Games.find({});
+    const filteredGames = await Games.find({
+      category: { $in: query }
+    });
 
-    if (chosenGame.length > 0) {
+    console.log(filteredGames);
+    if (filteredGames.length > 0) {
       res.json({
         success: true,
         filteredGames
