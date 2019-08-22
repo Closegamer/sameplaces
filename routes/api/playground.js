@@ -59,4 +59,34 @@ router.post('/contribute', async (req, res) => {
   }
 });
 
+router.post('/filter', async (req, res) => {
+  console.log('api playground filter ');
+  const categories = req.body.categories;
+  console.log('categories: ', categories);
+
+  const query = [];
+
+  categories.forEach(category => {
+    if (category) {
+      query.push(category);
+    }
+  });
+
+  console.log(query);
+  try {
+    const filteredGames = await Games.find({});
+
+    if (chosenGame.length > 0) {
+      res.json({
+        success: true,
+        filteredGames
+      });
+    } else {
+      res.json({ success: false, filteredGames });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 module.exports = router;

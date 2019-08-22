@@ -6,6 +6,7 @@ import * as usersActions from '../../ducks/users';
 import { Route, Switch } from 'react-router-dom';
 import Games from './Games';
 import Users from './Users';
+import Categories from './Categories';
 
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBNavLink } from 'mdbreact';
 import './styles.css';
@@ -43,6 +44,11 @@ export class Admin extends Component {
                   Пользователи
                 </MDBBtn>
               </MDBNavLink>
+              <MDBNavLink to={`${match.path}/categories`}>
+                <MDBBtn color='unique' className='admin-buttons'>
+                  Категории
+                </MDBBtn>
+              </MDBNavLink>
             </MDBCol>
             <MDBCol xs='12' sm='10' md='10' lg='10' xl='10'>
               <Switch>
@@ -54,6 +60,10 @@ export class Admin extends Component {
                   component={Form}
                 /> */}
                 <Route path={`${match.path}/users`} component={Users} />
+                <Route
+                  path={`${match.path}/categories`}
+                  component={Categories}
+                />
                 <Route component={Lost} />
               </Switch>
             </MDBCol>
