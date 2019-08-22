@@ -70,7 +70,7 @@ const loadCategoryFailed = error => ({
   error
 });
 
-// Game Demolition
+// Category Demolition
 
 const categoryDemolitionStart = () => ({
   type: CATEGORY_DEMOLITION_START
@@ -104,6 +104,7 @@ export const loadCategories = () => (dispatch, getState) => {
   return axios
     .get('/api/admin/categories/list')
     .then(response => {
+      console.log('categories duck response', response.data.categories);
       dispatch(loadCategoriesSucceed(response.data.categories));
     })
     .catch(error => {
@@ -163,8 +164,8 @@ const initialState = Immutable({
   categoryDemolitionError: '',
   categoryDemolitedAt: 0,
   loadedCategory: false,
-
-  list: []
+  list: [],
+  list2: []
 });
 
 // Reducer
@@ -178,7 +179,7 @@ export default function reducer(state = initialState, action = {}) {
 
     case LOADING_CATEGORIES_SUCCEED:
       return Immutable.merge(state, {
-        list: action.categories,
+        list2: action.categories,
         categoriesLoadedAt: action.fetchedAt,
         categoriesLoadingInProgress: false,
         categoriesLoadingError: ''

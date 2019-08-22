@@ -78,11 +78,11 @@ export class Admin extends Component {
 Admin.propTypes = {};
 
 const mapStateToProps = ({ games, users, categories }) => ({
-  // categories: categories.list,
-  // categoriesLoadingInProgress: categories.categoriesLoadingInProgress,
-  // categoriesLoadingError: categories.categoriesLoadingError,
-  // categoryCreationInProgress: categories.categoryCreationInProgress,
-  // categoryCreationError: categories.categoryCreationError,
+  categories: categories.list,
+  categoriesLoadingInProgress: categories.categoriesLoadingInProgress,
+  categoriesLoadingError: categories.categoriesLoadingError,
+  categoryCreationInProgress: categories.categoryCreationInProgress,
+  categoryCreationError: categories.categoryCreationError,
   games: games.list,
   gamesLoadingInProgress: games.gamesLoadingInProgress,
   gamesLoadingError: games.gamesLoadingError,
