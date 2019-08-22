@@ -1,0 +1,5 @@
+{
+  "socketEndpoint": "localhost:4001",
+  "clientPortEndpoint": "localhost:5000",
+  "uploadDir": "http://localhost:5000/api/upload/"
+}

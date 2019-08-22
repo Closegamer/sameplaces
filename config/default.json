@@ -1,0 +1,6 @@
+{
+  // "mongoURI": "mongodb+srv://iMillUser1:REDACTED_PASSWORD@iMillCluster1-w7wjp.mongodb.net/iMillDB?retryWrites=true",
+  "mongoURI": "mongodb://iMillUser1:REDACTED_PASSWORD@imillcluster1-shard-00-00-w7wjp.mongodb.net:27017,imillcluster1-shard-00-01-w7wjp.mongodb.net:27017,imillcluster1-shard-00-02-w7wjp.mongodb.net:27017/iMillDB?ssl=true&replicaSet=iMillCluster1-shard-0&authSource=admin&retryWrites=true&w=majority",
+  "jwtSecret": "REDACTED_JWT_SECRET",
+  "jwtRefreshSecret": "REDACTED_JWT_REFRESH_SECRET"
+}

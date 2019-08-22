@@ -1,0 +1,169 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { check, validationResult } = require('express-validator/check');
+const { createTokenPair } = require('../../utils/TokenHelpers');
+const auth = require('../../middleware/auth');
+const sendMail = require('../../utils/sendMail');
+
+const User = require('../../models/User');
+
+// @route    POST api/users
+// @desc     Register user
+// @access   Public
+router.post(
+  '/',
+  [
+    check('nick', 'Пожалуйста, введите Ваше имя в системе').isLength({
+      min: 3
+    }),
+    check('email', 'Пожалуйста, введите корректый email').isEmail(),
+    check('password', 'Пароль должен содержать не менее 6 символов').isLength({
+      min: 6
+    })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(
+      ({ location, msg, param, value, nestedErrors }) => {
+        return `${msg}`;
+      }
+    );
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json({ success: false, error: errors.array().join(', ') });
+    }
+
+    const { nick, email, password, role } = req.body;
+
+    try {
+      let user = await User.findOne({ email });
+      if (user) {
+        return res
+          .status(400)
+          .json({ success: false, error: 'User already exists' });
+      }
+
+      let role = 'customer';
+      let stuff = 'no';
+      let balance = 0;
+      let discount = 0;
+
+      user = new User({
+        nick,
+        email,
+        password,
+        role,
+        stuff,
+        discount,
+        balance
+      });
+
+      const salt = await bcrypt.genSalt(10);
+
+      user.password = await bcrypt.hash(password, salt);
+
+      if (!user.contribution) {
+        user.contribution = 0;
+      }
+
+      await user.save();
+
+      const payload = {
+        user: {
+          id: user.id,
+          role: user.role
+        }
+      };
+
+      const tokensData = await createTokenPair(payload, payload);
+
+      // sendMail(
+      //   'Pteat <***>',
+      //   email,
+      //   'Успешная регистрация',
+      //   `Ваш пароль: <b>${password}</b>`
+      // );
+
+      res.json({ success: true, tokens: tokensData });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+// @route    GET api/users/balance
+// @desc     Get User Balance
+// @access   Public
+router.get('/balance', auth, async (req, res) => {
+  try {
+    const currentUserId = req.user.id;
+    const foundUser = await User.findById(currentUserId);
+    const balance = foundUser.balance;
+
+    if (!foundUser) {
+      res.json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      balance
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    POST api/users/balance
+// @desc     POST User Balance
+// @access   Public
+router.post(
+  '/balance',
+  auth,
+  [check('balance', 'Пожалуйста, введите сумму').isNumeric()],
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(
+      ({ location, msg, param, value, nestedErrors }) => {
+        return `${msg}`;
+      }
+    );
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json({ success: false, error: errors.array().join(', ') });
+    }
+
+    const { balance } = req.body;
+    console.log('api user balance post balance: ', balance);
+    const currentUserId = req.user.id;
+
+    console.log(currentUserId);
+    try {
+      const foundUserId = await User.findById(currentUserId);
+      console.log(foundUserId);
+
+      const currentBalance = foundUserId.balance;
+
+      await User.updateOne(
+        { _id: foundUserId.id },
+        { balance: currentBalance + balance }
+      );
+
+      const updated = await User.findById(currentUserId);
+
+      res.json({ success: true, balance: updated.balance });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+module.exports = router;
