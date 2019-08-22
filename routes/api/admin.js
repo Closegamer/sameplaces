@@ -9,6 +9,7 @@ const server = require('../../server.js');
 const Games = require('../../models/Games');
 const GameHistory = require('../../models/GameHistory');
 const Users = require('../../models/User');
+const Categories = require('../../models/Categories');
 
 // @route    POST api/admin/games/status-change
 // @desc     Changing game status
@@ -259,8 +260,145 @@ router.get('/users/list', async (req, res) => {
   }
 });
 
+// @route    POST api/admin/games/delete/:humanId
+// @desc     Delete current game
+// @access   Public
+router.post('/games/delete/:humanId', async (req, res) => {
+  console.log('api admin games delete');
+  let humId = req.params.humanId;
+  try {
+    const gameInGames = await Games.findOneAndDelete({ humanId: humId });
+
+    res.json({ success: true, deleted: humId });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route    POST api/admin/categories/create
+// @desc     Create new category
+// @access   Public
+router.post('/categories/create', async (req, res) => {
+  console.log('api admin categories create');
+
+  let updateFlag = false;
+
+  if (!!req.body.humanId) {
+    updateFlag = true;
+  }
+
+  let { humanId, nameEng, nameRus, quantity } = req.body;
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  if (!humanId) {
+    humanId = getRandomInt(10000, 90000);
+  }
+
+  if (!nameEng) {
+    nameEng = 'someCategory';
+  }
+
+  if (!nameRus) {
+    nameRus = 'Какая-то категория';
+  }
+
+  if (!quantity) {
+    quantity = 0;
+  }
+
+  try {
+    let category = null;
+
+    if (updateFlag) {
+      category = await Categories.findOneAndUpdate(
+        { humanId: humanId },
+        req.body,
+        { upsert: false },
+        null
+      );
+    } else {
+      category = await Categories.findOne({ humanId: humanId });
+    }
+
+    if (updateFlag && !category) {
+      return res.status(400).json({
+        success: false,
+        error: 'No category to update'
+      });
+    }
+
+    if (!updateFlag && category) {
+      if (category) {
+        return res.status(400).json({
+          success: false,
+          error: 'Category with this HumanId already exists'
+        });
+      }
+    }
+
+    if (!updateFlag) {
+      category = new Categories({
+        humanId,
+        nameEng,
+        nameRus,
+        quantity
+      });
+    }
+
+    if (Object.keys(req.files).length !== 0) {
+      let bigPic = req.files.bigPic;
+      const realName = bigPic.name;
+      const guidName = uuid();
+      const ext = path.extname(realName);
+
+      category.bigPic = {
+        guid: guidName,
+        ext
+      };
+
+      bigPic.mv(`./upload/${guidName}${ext}`, function(err) {
+        if (err) throw new Error(err);
+      });
+    }
+
+    await category.save();
+
+    res.json({ success: true, category });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route    GET api/admin/categories/create/:humanId
+// @desc     Load category
+// @access   Public
+router.get('/categories/create/:humanId', async (req, res) => {
+  console.log('api admin categories create :humanId GET');
+  try {
+    let humId = req.params.humanId;
+    let category = await Categories.findOne({ humanId: humId });
+
+    if (!category) {
+      return res.status(400).json({
+        success: false,
+        error: 'No category found'
+      });
+    }
+
+    res.json({ success: true, loadedCategory: category });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 // @route    GET api/admin/categories/list
-// @desc     Categories list
+// @desc     Category list
 // @access   Public
 router.get('/categories/list', async (req, res) => {
   console.log('api admin categories list');
@@ -273,21 +411,23 @@ router.get('/categories/list', async (req, res) => {
       });
     }
 
-    res.json({ success: true, categories: categories });
+    res.json({ success: true, categories });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
 
-// @route    POST api/admin/games/delete/:humanId
-// @desc     Delete current game
+// @route    POST api/admin/categories/delete/:humanId
+// @desc     Delete current category
 // @access   Public
-router.post('/games/delete/:humanId', async (req, res) => {
-  console.log('api admin games delete');
+router.post('/categories/delete/:humanId', async (req, res) => {
+  console.log('api admin categories delete');
   let humId = req.params.humanId;
   try {
-    const gameInGames = await Games.findOneAndDelete({ humanId: humId });
+    const categoryInCategories = await Categories.findOneAndDelete({
+      humanId: humId
+    });
 
     res.json({ success: true, deleted: humId });
   } catch (err) {

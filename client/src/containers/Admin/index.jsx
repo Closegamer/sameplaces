@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as gamesActions from '../../ducks/games';
 import * as usersActions from '../../ducks/users';
+import * as categoriesActions from '../../ducks/categories';
 import { Route, Switch } from 'react-router-dom';
 import Games from './Games';
 import Users from './Users';
@@ -76,7 +77,12 @@ export class Admin extends Component {
 
 Admin.propTypes = {};
 
-const mapStateToProps = ({ games, users }) => ({
+const mapStateToProps = ({ games, users, categories }) => ({
+  // categories: categories.list,
+  // categoriesLoadingInProgress: categories.categoriesLoadingInProgress,
+  // categoriesLoadingError: categories.categoriesLoadingError,
+  // categoryCreationInProgress: categories.categoryCreationInProgress,
+  // categoryCreationError: categories.categoryCreationError,
   games: games.list,
   gamesLoadingInProgress: games.gamesLoadingInProgress,
   gamesLoadingError: games.gamesLoadingError,
@@ -88,7 +94,10 @@ const mapStateToProps = ({ games, users }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ ...gamesActions, ...usersActions }, dispatch)
+  actions: bindActionCreators(
+    { ...gamesActions, ...usersActions, ...categoriesActions },
+    dispatch
+  )
 });
 
 export default connect(
