@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { reset } from 'redux-form';
 import Immutable from 'seamless-immutable';
 import { setBalanceSuccess } from './balance';
 import socketIOClient from 'socket.io-client';
@@ -142,9 +143,9 @@ const playgroundRefreshExecute = games => ({
 const filterStart = () => ({
   type: FILTER_START
 });
-const filterSucceed = categories => ({
+const filterSucceed = games => ({
   type: FILTER_SUCCEED,
-  categories
+  games
 });
 const filterFailed = () => ({
   type: FILTER_FAILED
@@ -157,16 +158,22 @@ export const filter = categories => (dispatch, getState) => {
       categories
     })
     .then(response => {
-      dispatch(filterSucceed());
-      toast.success(
-        <span>
-          <MDBIcon far icon='check-circle' /> Фильтр применен
-        </span>,
-        {
-          closeButton: false,
-          position: 'bottom-left'
-        }
-      );
+      if (response.data.filteredGames.length > 0) {
+        dispatch(filterSucceed(response.data.filteredGames));
+        dispatch(reset('filter-form'));
+        toast.success(
+          <span>
+            <MDBIcon far icon='check-circle' /> Фильтр применен
+          </span>,
+          {
+            closeButton: false,
+            position: 'bottom-left'
+          }
+        );
+      } else {
+        dispatch(loadGames());
+      }
+      dispatch(getTimers());
       return response.data;
     })
     .catch(error => {
@@ -447,7 +454,11 @@ export default function reducer(state = initialState, action = {}) {
       return Immutable.merge(state, {
         list: Immutable(allGames)
       });
-
+    case FILTER_SUCCEED:
+      const allGamesList = [...state.list.asMutable()];
+      return Immutable.merge(state, {
+        list: Immutable(action.games)
+      });
     default:
       return state;
   }

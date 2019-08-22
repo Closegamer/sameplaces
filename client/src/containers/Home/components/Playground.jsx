@@ -28,10 +28,10 @@ export class Playground extends Component {
 
   onFilter = categories => {
     const { actions } = this.props;
-    console.log(categories);
+
     return actions.filter(categories).then(res => {
       if (res.success) {
-        console.log('onFilter: ', res.success);
+        console.log('filter form cleared');
       }
     });
   };
