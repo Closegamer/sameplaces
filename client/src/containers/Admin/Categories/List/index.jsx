@@ -36,18 +36,18 @@ export class List extends Component {
 
   render() {
     const {
-      // categories,
-      // categoriesLoadingInProgress,
-      // categoriesLoadingError
+      categories,
+      categoriesLoadingInProgress,
+      categoriesLoadingError
     } = this.props;
 
-    // if (!!categoriesLoadingError) return <div>{categoriesLoadingError}</div>;
+    if (!!categoriesLoadingError) return <div>{categoriesLoadingError}</div>;
 
-    // if (categoriesLoadingInProgress) return <MDBSpinner />;
+    if (categoriesLoadingInProgress) return <MDBSpinner />;
 
     return (
       <React.Fragment>
-        {/* {!categories[0] ? (
+        {!categories[0] ? (
           <div>Нет категорий</div>
         ) : (
           <div className='monitor-cont'>
@@ -81,8 +81,8 @@ export class List extends Component {
                             />
                           )}
                       </td>
-                      <td>{category.NameEng}</td>
-                      <td>{category.NameRus}</td>
+                      <td>{category.nameEng}</td>
+                      <td>{category.nameRus}</td>
                       <td>{category.quantity}</td>
                     </tr>
                   );
@@ -90,17 +90,17 @@ export class List extends Component {
               </tbody>
             </table>
           </div>
-        )} */}
+        )}
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = ({ categories }) => ({
-  // categories: categories.list,
-  // categoriesLoadingInProgress: categories.categoriesLoadingInProgress,
-  // categoriesLoadingError: categories.categoriesLoadingError,
-  // categoriesLoadedAt: categories.categoriesLoadedAt
+  categories: categories.list,
+  categoriesLoadingInProgress: categories.categoriesLoadingInProgress,
+  categoriesLoadingError: categories.categoriesLoadingError,
+  categoriesLoadedAt: categories.categoriesLoadedAt
 });
 
 const mapDispatchToProps = dispatch => ({

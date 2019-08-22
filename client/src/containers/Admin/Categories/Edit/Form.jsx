@@ -13,48 +13,27 @@ let Form = props => {
         name='humanId'
         component={TextField}
         type='text'
-        label='Id игры (auto)'
+        label='Id категории (auto)'
         group
         disabled
       />
       <Field
-        name='description'
+        name='nameEng'
         component={TextField}
         type='text'
-        label='Description'
+        label='nameEng'
         group
       />
       <Field
-        name='caption'
+        name='nameRus'
         component={TextField}
         type='text'
-        label='Caption'
+        label='nameRus'
         group
-      />
-      <Field
-        name='discount'
-        component={TextField}
-        type='text'
-        label='Discount'
-        group
-      />
-      <Field
-        name='category'
-        component={TextField}
-        type='text'
-        label='Category'
-        group
-      />
-      <Field name='link' component={TextField} type='text' label='Link' group />
-      <Field
-        name='duration'
-        component={TextField}
-        label='Duration'
-        group
-        search={false}
       />
 
       <Field name='bigPic' component={FileField} />
+
       <MDBBtn type='submit' color='unique'>
         Создать
       </MDBBtn>
@@ -63,7 +42,7 @@ let Form = props => {
 };
 
 Form = reduxForm({
-  form: 'createGame'
+  form: 'category-form'
 })(Form);
 
 export default Form;
