@@ -259,6 +259,27 @@ router.get('/users/list', async (req, res) => {
   }
 });
 
+// @route    GET api/admin/categories/list
+// @desc     Categories list
+// @access   Public
+router.get('/categories/list', async (req, res) => {
+  console.log('api admin categories list');
+  try {
+    let categories = await Categories.find();
+    if (categories.length < 1) {
+      return res.status(400).json({
+        success: false,
+        error: 'No categories in collection'
+      });
+    }
+
+    res.json({ success: true, categories: categories });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 // @route    POST api/admin/games/delete/:humanId
 // @desc     Delete current game
 // @access   Public

@@ -83,6 +83,16 @@ let Filter = props => {
                 Отфильтровать
               </MDBBtn>
             </div>
+            <div className='text-center mb-3 col-md-12'>
+              <MDBBtn
+                color='white'
+                outline
+                className='btn-block z-depth-1'
+                type='reset'
+              >
+                Очистить
+              </MDBBtn>
+            </div>
           </MDBRow>
         </div>
       </MDBCard>
