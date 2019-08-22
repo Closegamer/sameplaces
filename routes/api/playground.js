@@ -62,11 +62,9 @@ router.post('/contribute', async (req, res) => {
 router.post('/filter', async (req, res) => {
   console.log('api playground filter ');
   let categories = req.body.categories;
-  console.log('categories: ', categories);
 
   categories = Object.keys(categories);
 
-  console.log(categories);
   const allCategories = await Categories.find();
 
   const query = [];
