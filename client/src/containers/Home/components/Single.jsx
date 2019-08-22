@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Countdown, { zeroPad } from 'react-countdown-now';
 import socketIOClient from 'socket.io-client';
-// import { Field, reduxForm, formValueSelector } from 'redux-form';
-// import { CheckBoxField } from '../../../fields';
 import {
   MDBCard,
   MDBCardUp,
@@ -20,7 +18,6 @@ import {
   MDBSwitch
 } from 'mdbreact';
 import * as playgroundActions from '../../../ducks/playground';
-import * as balanceActions from '../../../ducks/balance';
 import * as gamesActions from '../../../ducks/games';
 import '../styles.css';
 import store from '../../../store';
@@ -37,87 +34,30 @@ class Single extends Component {
     switchOn: false
   };
 
-  componentDidMount(getState) {
-    const { autobettingList, game } = this.props;
-    if (autobettingList) {
-      for (var i = 0; i < autobettingList.length; i++) {
-        if (autobettingList[i].game[0]._id === game._id) {
-          this.setState({ switchOn: true });
-        }
-      }
-    }
-  }
+  contribute = singleGame => {
+    console.log('contribute');
+    const { playgroundActions } = this.props;
+    playgroundActions.gameContribution(singleGame._id);
+    this.goToLink(singleGame.link);
+  };
 
   handleFlipping = () => {
     this.setState({ flipped: !this.state.flipped });
   };
 
-  contribute = singleGame => {
-    console.log('contribute');
-    const { playgroundActions } = this.props;
-    playgroundActions.gameContribution(singleGame._id);
-
-    this.setState({ timer: 0 });
-  };
-
   cardUpdateSocket = singleGame => {
     const socket = socketIOClient(this.state.endpoint);
     socket.emit('gameCardUpdate', singleGame);
-    socket.emit('timerSync', singleGame);
+    // socket.emit('timerSync', singleGame);
   };
 
-  toCart = values => {
-    console.log('item is in cart: ', values);
-  };
-
-  handleSwitchChange = () => {
-    const singleGame = this.props.game;
-    const { switchOn } = this.state;
-    console.log('current position: ', switchOn);
-    this.setState(
-      {
-        switchOn: !switchOn
-      },
-      () => this.handleChange(singleGame, switchOn)
-    );
-  };
-
-  handleChange = (singleGame, position) => {
-    let switchPositionOn = false;
-    console.log('position: ', position);
-    if (position) {
-      switchPositionOn = true;
-    }
-
-    if (!switchPositionOn) {
-      this.setAutobetting(singleGame);
-    } else {
-      this.unsetAutobetting(singleGame);
-    }
-  };
-
-  setAutobetting = singleGame => {
-    const socket = socketIOClient(this.state.endpoint);
-    const { gameActions } = this.props;
-    console.log('single setAutobetting');
-    gameActions.setAutobetting(singleGame, true);
-    socket.emit('timerSync', singleGame);
-  };
-
-  unsetAutobetting = singleGame => {
-    const socket = socketIOClient(this.state.endpoint);
-    const { gameActions } = this.props;
-    console.log('single unsetAutobetting');
-    gameActions.setAutobetting(singleGame, false);
-    socket.emit('timerSync', singleGame);
+  goToLink = link => {
+    console.log(link);
   };
 
   render() {
     console.log('render Single');
     const singleGame = this.props.game;
-    let { switchOn } = this.state;
-
-    const currentUser = 'SuperAdmin';
 
     const index = this.props.index;
 
@@ -135,9 +75,15 @@ class Single extends Component {
         return (
           <MDBContainer className='timerFiguresCont'>
             <MDBRow className='timerLabel'>
-              <MDBCol>часы</MDBCol>
-              <MDBCol>минуты</MDBCol>
-              <MDBCol>секунды</MDBCol>
+              <MDBCol size={4}>
+                <div className='text-center'>часов</div>
+              </MDBCol>
+              <MDBCol size={4}>
+                <div className='text-center'>минут</div>
+              </MDBCol>
+              <MDBCol size={4}>
+                <div className='text-center'>секунд</div>
+              </MDBCol>
             </MDBRow>
             <MDBRow>
               <MDBCol className='countdownHrs'>{hours}</MDBCol>
@@ -177,37 +123,12 @@ class Single extends Component {
               alt={singleGame.caption}
             />
             <h4 className='font-weight-bold mb-3'>{singleGame.caption}</h4>
-            <p className='font-weight-bold blue-text'>
-              №: {singleGame.humanId}
+            <p>Акция</p>
+            <p>{singleGame.description}</p>
+            <p>Скидка</p>
+            <p>
+              <span className={'discount'}>{singleGame.discount}%</span>
             </p>
-            <p className='font-weight-bold blue-text' />
-            <p className='font-weight-bold blue-text'>
-              {singleGame.currentPrice} руб.
-            </p>
-            <p className='font-weight-bold blue-text'>
-              Период: {singleGame.duration} сек
-            </p>
-
-            {singleGame.status === 'holded' && (
-              <p className='font-weight-bold blue-text'>
-                На финише: {singleGame.winner}
-              </p>
-            )}
-            {singleGame.status === 'opened' && (
-              <p className='font-weight-bold blue-text'>
-                На финише: {singleGame.winner}
-              </p>
-            )}
-            {singleGame.status === 'paused' && (
-              <p className='font-weight-bold blue-text'>
-                На финише: {singleGame.winner}
-              </p>
-            )}
-            {singleGame.status === 'closed' && (
-              <p className='font-weight-bold blue-text'>
-                Победил: {singleGame.winner}
-              </p>
-            )}
             {/* <a
               href='#!'
               className='rotate-btn'
@@ -219,6 +140,7 @@ class Single extends Component {
           </MDBCardBody>
           {singleGame.status === 'opened' && (
             <React.Fragment>
+              <p>До окончания акции</p>
               <Countdown
                 date={
                   Date.now() + (singleGame.duration - singleGame.timer) * 1000
@@ -230,34 +152,13 @@ class Single extends Component {
                 controlled={false}
                 renderer={timerRenderer}
               />
-              <div className='text-right'>
-                {singleGame.autoBetting === 'Да' && (
-                  <MDBSwitch
-                    checked={switchOn}
-                    getValue={this.handleSwitchChange}
-                    // onClick={() => this.setState({ switchOn: !switchOn })}
-                    labelLeft={'Автомат'}
-                    labelRight={''}
-                    className='switchAutobetting'
-                  />
-                )}
-                {singleGame.autoBetting === 'Нет' && (
-                  <MDBSwitch
-                    disabled
-                    checked={false}
-                    labelLeft={'Автомат недоступен'}
-                    labelRight={''}
-                    className='switchAutobetting'
-                  />
-                )}
-              </div>
 
               {singleGame.status !== 'closed' && (
                 <MDBBtn
                   color='success'
                   onClick={e => this.contribute(singleGame)}
                 >
-                  Поднять цену
+                  Перейти
                 </MDBBtn>
               )}
             </React.Fragment>
@@ -269,15 +170,7 @@ class Single extends Component {
             <MDBAlert color='dark'>ОСТАНОВЛЕНО</MDBAlert>
           )}
           {singleGame.status === 'closed' && (
-            <MDBAlert color='danger'>АУКЦИОН ОКОНЧЕН</MDBAlert>
-          )}
-          {singleGame.status === 'closed' && singleGame.winner === currentUser && (
-            <MDBBtn
-              color='success'
-              // onClick={e => this.contribute(singleGame)}
-            >
-              Купить за {singleGame.currentPrice} руб.
-            </MDBBtn>
+            <MDBAlert color='danger'>АКЦИЯ ОКОНЧЕНА</MDBAlert>
           )}
         </MDBCard>
         <MDBCard className='face back'>
@@ -327,8 +220,7 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
   gameActions: bindActionCreators({ ...gamesActions }, dispatch),
-  playgroundActions: bindActionCreators({ ...playgroundActions }, dispatch),
-  balanceActions: bindActionCreators({ ...balanceActions }, dispatch)
+  playgroundActions: bindActionCreators({ ...playgroundActions }, dispatch)
 });
 
 export default connect(

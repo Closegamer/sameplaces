@@ -1,8 +1,10 @@
+import React from 'react';
 import axios from 'axios';
 import Immutable from 'seamless-immutable';
 import { setBalanceSuccess } from './balance';
 import socketIOClient from 'socket.io-client';
 import config from '../config.json';
+import { toast, MDBIcon } from 'mdbreact';
 
 const prefix = 'playground';
 
@@ -33,6 +35,10 @@ const GET_TIMERS_SUCCEED = `${prefix}/GET_TIMERS_SUCCEED`;
 const GET_TIMERS_FAILED = `${prefix}/GET_TIMERS_FAILED`;
 
 const PLAYGROUND_REFRESH = `${prefix}/PLAYGROUND_REFRESH`;
+
+const FILTER_START = `${prefix}/FILTER_START`;
+const FILTER_SUCCEED = `${prefix}/FILTER_SUCCEED`;
+const FILTER_FAILED = `${prefix}/FILTER_FAILED`;
 
 // Game contribute
 
@@ -132,6 +138,42 @@ const playgroundRefreshExecute = games => ({
   games
 });
 
+// filter
+const filterStart = () => ({
+  type: FILTER_START
+});
+const filterSucceed = categories => ({
+  type: FILTER_SUCCEED,
+  categories
+});
+const filterFailed = () => ({
+  type: FILTER_FAILED
+});
+
+export const filter = categories => (dispatch, getState) => {
+  dispatch(filterStart());
+  return axios
+    .post('/api/playground/filter', {
+      categories
+    })
+    .then(response => {
+      dispatch(filterSucceed());
+      toast.success(
+        <span>
+          <MDBIcon far icon='check-circle' /> Фильтр применен
+        </span>,
+        {
+          closeButton: false,
+          position: 'bottom-left'
+        }
+      );
+      return response.data;
+    })
+    .catch(error => {
+      dispatch(filterFailed(error.message));
+    });
+};
+
 export const refresh = games => (dispatch, getState) => {
   console.log('playground refresh is here');
 
@@ -220,31 +262,13 @@ export const gameContribution = singleGame => (dispatch, getState) => {
   dispatch(gameContributeStart());
   return axios
     .post('/api/playground/contribute', {
-      singleGame,
-      user: getState().auth.user
+      singleGame
     })
     .then(response => {
       dispatch(gameContributeSucceed(response.data.updatedGame));
 
-      return response;
-    })
-    .then(response => {
-      console.log('response ================>', response.data);
-      dispatch(
-        setBalanceSuccess({
-          balance: response.data.balance
-        })
-      );
-      return response;
-    })
-    .then(response => {
-      dispatch(gameCardUpdateExecution(response.data.updatedGame));
-      const socket = socketIOClient(config.socketEndpoint);
-      socket.emit('gameCardUpdate', response.data.updatedGame);
-      socket.emit('timerSync', response.data.updatedGame);
       return response.data;
     })
-
     .catch(error => {
       dispatch(gameContributeFailed(error.message));
     });

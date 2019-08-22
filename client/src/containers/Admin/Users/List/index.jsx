@@ -44,16 +44,6 @@ export class List extends Component {
                 Создать
               </MDBBtn>
             </MDBNavLink>
-            <MDBNavLink to={`/admin/users/edit`}>
-              <MDBBtn color='unique' className='admin-buttons'>
-                Редактировать
-              </MDBBtn>
-            </MDBNavLink>
-            <MDBNavLink to={`/admin/users/block`}>
-              <MDBBtn color='unique' className='admin-buttons'>
-                Заблокировать
-              </MDBBtn>
-            </MDBNavLink>
           </div>
         </div>
         {!users[0] ? (

@@ -14,8 +14,9 @@ const GamesSchema = new mongoose.Schema(
       type: Number,
       required: false
     },
-    totalIncome: {
-      type: Number
+    category: {
+      type: String,
+      required: false
     },
     status: {
       type: String,
@@ -33,15 +34,11 @@ const GamesSchema = new mongoose.Schema(
       type: Number,
       required: false
     },
-    autoBetting: {
-      type: String,
-      required: false
-    },
-    betSize: {
+    discount: {
       type: Number,
       required: false
     },
-    singleStep: {
+    timesClicked: {
       type: Number,
       required: false
     },
@@ -53,15 +50,7 @@ const GamesSchema = new mongoose.Schema(
       type: Number,
       required: false
     },
-    winner: {
-      type: String,
-      required: false
-    },
-    winnerId: {
-      type: String,
-      required: false
-    },
-    reactor: {
+    link: {
       type: String,
       required: false
     },

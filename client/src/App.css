@@ -24,11 +24,15 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, Roboto, 'Segoe UI',
     'Helvetica Neue', Arial, sans-serif;
   font-weight: normal;
-  background-color: #fff8e1;
+  background-color: white;
 }
 
 h1,
 h2 {
   font-family: 'Fira Sans', sans-serif;
   font-weight: normal;
+}
+
+.logo-label {
+  font-size: 5px;
 }

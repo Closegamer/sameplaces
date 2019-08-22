@@ -31,51 +31,25 @@ router.get('/', async (req, res) => {
 router.post('/contribute', async (req, res) => {
   console.log('api playground contribute ');
   const { singleGame, user } = req.body;
-  const lastClick = Date.now();
 
   try {
     const chosenGame = await Games.findById(singleGame);
-    const currentUser = await User.findById(user);
+    const newTimesClicked = chosenGame.timesClicked + 1;
 
     if (chosenGame.status == 'opened') {
-      const balance = currentUser.balance;
-      const newValue = balance - chosenGame.betSize;
-      if (newValue > 0) {
-        await Games.updateOne(
-          { _id: singleGame },
-          {
-            totalIncome: chosenGame.totalIncome + chosenGame.betSize,
-            currentPrice: chosenGame.currentPrice + chosenGame.singleStep,
-            winner: user.nick,
-            winnerId: user._id,
-            lastClick: lastClick
-          }
-        );
+      await Games.updateOne(
+        { _id: singleGame },
+        {
+          timesClicked: newTimesClicked
+        }
+      );
 
-        const updatedGame = await Games.findById(singleGame);
+      const updatedGame = await Games.findById(singleGame);
 
-        const discount =
-          currentUser.discount +
-          (chosenGame.betSize - chosenGame.singleStep) / 4;
-
-        await User.updateOne(
-          { _id: user._id },
-          {
-            balance: newValue,
-            discount
-          }
-        );
-
-        const updatedBalance = await User.findById(user);
-
-        res.json({
-          success: true,
-          updatedGame,
-          balance: updatedBalance.balance
-        });
-      } else {
-        res.status(401).json({ error: 'No money' });
-      }
+      res.json({
+        success: true,
+        updatedGame
+      });
     } else {
       res.json({ success: false, updatedGame });
     }

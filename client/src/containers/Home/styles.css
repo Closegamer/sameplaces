@@ -51,7 +51,8 @@
   background-color: #00c851 !important;
   left: 1.5rem;
 }
-.switchAutobetting {
-  color: black;
-  margin-top: 10px;
+
+.discount {
+  color: red;
+  font-size: 40px;
 }
