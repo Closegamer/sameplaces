@@ -26,9 +26,10 @@ export class Playground extends Component {
     }
   }
 
-  onFilter = values => {
+  onFilter = categories => {
     const { actions } = this.props;
-    return actions.filter(values).then(res => {
+    console.log(categories);
+    return actions.filter(categories).then(res => {
       if (res.success) {
         console.log('onFilter: ', res.success);
       }
