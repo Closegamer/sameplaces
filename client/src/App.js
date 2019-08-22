@@ -9,6 +9,7 @@ import setInterceptors from './utils/setInterceptors';
 import { loadUser } from './ducks/auth';
 import * as playgroundActions from './ducks/playground';
 import * as gameActions from './ducks/games';
+import * as categoriesActions from './ducks/categories';
 import { ToastContainer } from 'mdbreact';
 
 import './App.css';
@@ -26,15 +27,6 @@ export class App extends Component {
       endpoint: config.socketEndpoint
     };
   }
-
-  // send = () => {
-  //   const socket = socketIOClient(this.state.endpoint);
-  //   socket.emit('change color', this.state.color);
-  // };
-
-  // setColor = color => {
-  //   this.setState({ color });
-  // };
 
   setAlert = msg => {
     const socket = socketIOClient(this.state.endpoint);

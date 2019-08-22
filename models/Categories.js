@@ -14,10 +14,10 @@ const CategoriesSchema = new mongoose.Schema(
       type: String,
       required: false
     },
-    quantity:{
+    quantity: {
       type: Number,
       required: false
-    }
+    },
     bigPic: {
       guid: {
         type: String,
