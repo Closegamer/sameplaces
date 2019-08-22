@@ -128,6 +128,7 @@ export const createCategory = ({ bigPic, ...values }) => (
   dispatch,
   getState
 ) => {
+  console.log('duck categories: ', values);
   dispatch(createCategoryStart());
   let formData = new FormData();
 
@@ -164,8 +165,7 @@ const initialState = Immutable({
   categoryDemolitionError: '',
   categoryDemolitedAt: 0,
   loadedCategory: false,
-  list: [],
-  list2: []
+  list: []
 });
 
 // Reducer
@@ -179,7 +179,7 @@ export default function reducer(state = initialState, action = {}) {
 
     case LOADING_CATEGORIES_SUCCEED:
       return Immutable.merge(state, {
-        list2: action.categories,
+        list: action.categories,
         categoriesLoadedAt: action.fetchedAt,
         categoriesLoadingInProgress: false,
         categoriesLoadingError: ''

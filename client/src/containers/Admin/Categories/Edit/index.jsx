@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import socketIOClient from 'socket.io-client';
 import * as gamesActions from '../../../../ducks/games';
 import * as playgroundActions from '../../../../ducks/playground';
+import * as categoriesActions from '../../../../ducks/categories';
 import Form from './Form';
 import '../../styles.css';
 import config from '../../../../config.json';
@@ -28,9 +29,10 @@ export class Edit extends Component {
   }
 
   onSubmit = values => {
-    const { actions, history } = this.props;
+    const { categoriesActions, history } = this.props;
+    console.log('on submit values ', values);
 
-    return actions.createCategory(values).then(result => {
+    return categoriesActions.createCategory(values).then(result => {
       if (result.success) {
         history.replace('/admin/categories/list');
       }
@@ -79,7 +81,8 @@ const mapStateToProps = ({ categories }) => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ ...gamesActions }, dispatch),
-  playgroundActions: bindActionCreators({ ...playgroundActions }, dispatch)
+  playgroundActions: bindActionCreators({ ...playgroundActions }, dispatch),
+  categoriesActions: bindActionCreators({ ...categoriesActions }, dispatch)
 });
 
 export default connect(

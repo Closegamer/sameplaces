@@ -1,3 +1,3 @@
-const SITE_NAME = 'iMillGames';
+const SITE_NAME = 'SamePlaces';
 
 export { SITE_NAME };

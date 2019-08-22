@@ -6,6 +6,7 @@ import games from './games';
 import users from './users';
 import admin from './admin';
 import playground from './playground';
+import categories from './categories';
 
 export default combineReducers({
   auth,
@@ -14,5 +15,6 @@ export default combineReducers({
   games,
   users,
   admin,
-  playground
+  playground,
+  categories
 });

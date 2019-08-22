@@ -290,6 +290,7 @@ router.post('/categories/create', async (req, res) => {
 
   let { humanId, nameEng, nameRus, quantity } = req.body;
 
+  console.log('req.body ', req.body);
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -404,14 +405,13 @@ router.get('/categories/list', async (req, res) => {
   console.log('api admin categories list');
   try {
     let categories = await Categories.find();
-    console.log('api admin categories list: ', categories);
+
     if (categories.length < 1) {
       return res.status(400).json({
         success: false,
         error: 'No categories in collection'
       });
     }
-
     res.json({ success: true, categories: categories });
   } catch (err) {
     console.error(err.message);
