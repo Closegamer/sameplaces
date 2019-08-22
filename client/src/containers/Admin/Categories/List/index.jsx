@@ -48,7 +48,9 @@ export class List extends Component {
     return (
       <React.Fragment>
         {!categories[0] ? (
-          <div>Нет категорий</div>
+          <div>
+            <h4>Нет категорий</h4>
+          </div>
         ) : (
           <div className='monitor-cont'>
             <h4>Все Категории</h4>
@@ -60,6 +62,7 @@ export class List extends Component {
                   <th scope='col'>NameEng</th>
                   <th scope='col'>NameRus</th>
                   <th scope='col'>Quantity</th>
+                  <th scope='col'>Controls</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,6 +87,20 @@ export class List extends Component {
                       <td>{category.nameEng}</td>
                       <td>{category.nameRus}</td>
                       <td>{category.quantity}</td>
+                      <td>
+                        <React.Fragment>
+                          <MDBBtn
+                            color='red'
+                            rounded
+                            size='sm'
+                            onClick={e =>
+                              this.deleteCurrentCategory(category.humanId)
+                            }
+                          >
+                            <MDBIcon icon='times' />
+                          </MDBBtn>
+                        </React.Fragment>
+                      </td>
                     </tr>
                   );
                 })}
