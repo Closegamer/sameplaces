@@ -25,44 +25,47 @@ let Filter = props => {
               <strong>Категории</strong>
             </h3>
           </div>
-
-          <Field
-            name='health'
-            component={CheckBoxField}
-            label={
-              <label className='form-check-label white-text' htmlFor='health'>
-                Здоровье
-              </label>
-            }
-          />
-          <Field
-            name='men'
-            component={CheckBoxField}
-            label={
-              <label className='form-check-label white-text' htmlFor='cat-men'>
-                Для мужчин
-              </label>
-            }
-          />
-          <Field
-            name='women'
-            component={CheckBoxField}
-            label={
-              <label className='form-check-label white-text' htmlFor='women'>
-                Для женщин
-              </label>
-            }
-          />
-          <Field
-            name='banks'
-            component={CheckBoxField}
-            label={
-              <label className='form-check-label white-text' htmlFor='banks'>
-                Банки
-              </label>
-            }
-          />
-
+          <MDBRow className='d-flex align-items-center mb-4'>
+            <Field
+              name='health'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='health'>
+                  Здоровье
+                </label>
+              }
+            />
+            <Field
+              name='men'
+              component={CheckBoxField}
+              label={
+                <label
+                  className='form-check-label white-text'
+                  htmlFor='cat-men'
+                >
+                  Для мужчин
+                </label>
+              }
+            />
+            <Field
+              name='women'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='women'>
+                  Для женщин
+                </label>
+              }
+            />
+            <Field
+              name='banks'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='banks'>
+                  Банки
+                </label>
+              }
+            />
+          </MDBRow>
           <MDBRow className='d-flex align-items-center mb-4'>
             <div className='text-center mb-3 col-md-12'>
               <MDBBtn
