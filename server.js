@@ -33,8 +33,6 @@ app.use('/api/playground', require('./routes/api/playground'));
 app.use('/api/autobettings', require('./routes/api/autobettings'));
 
 // Serve static assets in production
-console.log(__dirname);
-// app.use('/api/upload', express.static(__dirname + '/upload'));
 app.use('/api/upload', express.static(__dirname + '/upload'));
 
 if (process.env.NODE_ENV === 'production') {

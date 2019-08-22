@@ -404,6 +404,7 @@ router.get('/categories/list', async (req, res) => {
   console.log('api admin categories list');
   try {
     let categories = await Categories.find();
+    console.log('api admin categories list: ', categories);
     if (categories.length < 1) {
       return res.status(400).json({
         success: false,
@@ -411,7 +412,7 @@ router.get('/categories/list', async (req, res) => {
       });
     }
 
-    res.json({ success: true, categories });
+    res.json({ success: true, categories: categories });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
