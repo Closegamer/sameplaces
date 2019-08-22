@@ -21,101 +21,39 @@ let Form = props => {
         name='description'
         component={TextField}
         type='text'
-        label='Описание'
+        label='Description'
         group
       />
       <Field
         name='caption'
         component={TextField}
         type='text'
-        label='Название игры или приза'
+        label='Caption'
         group
       />
       <Field
-        name='marketPrice'
+        name='discount'
         component={TextField}
         type='text'
-        label='Рыночная цена приза'
+        label='Discount'
         group
       />
+      <Field
+        name='category'
+        component={TextField}
+        type='text'
+        label='Category'
+        group
+      />
+      <Field name='link' component={TextField} type='text' label='Link' group />
       <Field
         name='duration'
-        component={SelectField}
-        label='Период, секунд'
-        group
-        options={[
-          {
-            text: '15',
-            value: 15
-          },
-          {
-            text: '30',
-            value: 30
-          },
-          {
-            text: '45',
-            value: 45
-          },
-          {
-            text: '88888',
-            value: 88888
-          }
-        ]}
-        search={false}
-      />
-      <Field
-        name='autoBetting'
-        component={SelectField}
-        label='Автоставки'
-        group
-        options={[
-          {
-            text: 'Да',
-            value: 'on'
-          },
-          {
-            text: 'Нет',
-            value: 'off'
-          }
-        ]}
-        search={false}
-      />
-      <Field
-        name='betSize'
-        component={SelectField}
-        label='Цена участия, рублей'
-        group
-        options={[
-          {
-            text: '10',
-            value: 10
-          },
-          {
-            text: '15',
-            value: 15
-          },
-          {
-            text: '20',
-            value: 20
-          },
-          {
-            text: '30',
-            value: 30
-          },
-          {
-            text: '100',
-            value: 100
-          }
-        ]}
-        search={false}
-      />
-      <Field
-        name='singleStep'
         component={TextField}
-        type='text'
-        label='Шаг роста цены, рублей'
+        label='Duration'
         group
+        search={false}
       />
+
       <Field name='bigPic' component={FileField} />
       <MDBBtn type='submit' color='unique'>
         Создать

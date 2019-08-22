@@ -8,7 +8,7 @@ export default function Games({ match }) {
   return (
     <React.Fragment>
       <div className='rightBordered'>
-        <h3>Управление играми</h3>
+        <h3>Управление акциями</h3>
         <br />
         <div
           className='btn-group btn-group-lg'
@@ -17,12 +17,12 @@ export default function Games({ match }) {
         >
           <MDBNavLink to={`/admin/games/create`}>
             <MDBBtn color='unique' className='admin-buttons'>
-              Создать игру
+              Создать акцию
             </MDBBtn>
           </MDBNavLink>
           <MDBNavLink to={`/admin/games/list`}>
             <MDBBtn color='unique' className='admin-buttons'>
-              Все игры
+              Все акции
             </MDBBtn>
           </MDBNavLink>
         </div>

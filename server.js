@@ -10,13 +10,6 @@ const server = http.createServer(app);
 const io = socketIO(server);
 const cron = require('node-cron');
 
-// Initial autobetting grab
-const autobettings = require('./routes/api/autobettings');
-
-cron.schedule('*/5 * * * * *', () => {
-  autoexec(null, null, null);
-});
-
 // Connect Database
 connectDB();
 
@@ -37,7 +30,6 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/refresh', require('./routes/api/refresh'));
 app.use('/api/admin', require('./routes/api/admin'));
 app.use('/api/playground', require('./routes/api/playground'));
-app.use('/api/autobettings', require('./routes/api/autobettings'));
 
 // Serve static assets in production
 console.log(__dirname);

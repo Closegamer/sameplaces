@@ -53,19 +53,16 @@ export class Edit extends Component {
       initialValues = loadedGame;
     } else {
       initialValues = {
-        duration: '30',
-        autoBetting: 'Да',
-        betSize: '10',
-        singleStep: 1
+        duration: '30'
       };
     }
     return (
-      <div className="monitor-cont">
+      <div className='monitor-cont'>
         {humanId && <h3>Редактировать игру</h3>}
         {!humanId && <h3>Новая</h3>}
         <MDBContainer>
           <MDBRow>
-            <MDBCol size="4">
+            <MDBCol size='4'>
               <Form onSubmit={this.onSubmit} initialValues={initialValues} />
             </MDBCol>
           </MDBRow>

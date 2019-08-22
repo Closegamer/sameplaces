@@ -42,11 +42,6 @@ export class List extends Component {
     socket.emit('gameDemolition', humanId);
   };
 
-  reactorSwitch = (game, reactorSwitch) => {
-    const { actions } = this.props;
-    actions.gameReactorSwitch(game, reactorSwitch);
-  };
-
   render() {
     const { games, gamesLoadingInProgress, gamesLoadingError } = this.props;
 
@@ -59,26 +54,21 @@ export class List extends Component {
         {!games[0] ? (
           <div>Нету</div>
         ) : (
-          <div className="monitor-cont">
+          <div className='monitor-cont'>
             <h4>Все Игры</h4>
-            <table className="table table-striped text-center">
+            <table className='table table-striped text-center'>
               <thead>
                 <tr>
-                  <th scope="col">HumanId</th>
-                  <th scope="col">BigPic</th>
-                  <th scope="col">Caption</th>
-                  <th scope="col">MarketPrice</th>
-                  <th scope="col">CurrentPrice</th>
-                  <th scope="col">TotalIncome</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Duration</th>
-                  <th scope="col">BetSize</th>
-                  <th scope="col">SingleStep</th>
-                  <th scope="col">AutoBetting</th>
-                  <th scope="col">Timer</th>
-                  <th scope="col">Winner</th>
-                  <th scope="col">Reactor</th>
-                  <th scope="col">Actions</th>
+                  <th scope='col'>HumanId</th>
+                  <th scope='col'>BigPic</th>
+                  <th scope='col'>Category</th>
+                  <th scope='col'>Caption</th>
+                  <th scope='col'>Description</th>
+                  <th scope='col'>Discount</th>
+                  <th scope='col'>Times Clicked</th>
+                  <th scope='col'>Status</th>
+                  <th scope='col'>Duration</th>
+                  <th scope='col'>Controls</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,146 +88,113 @@ export class List extends Component {
                           />
                         )}
                       </td>
+                      <td>{game.category}</td>
                       <td>{game.caption}</td>
-                      <td>{game.marketPrice}</td>
-                      <td>{game.currentPrice}</td>
-                      <td>{game.totalIncome}</td>
+                      <td>{game.description}</td>
+                      <td>{game.discount}</td>
+                      <td>{game.timesClicked}</td>
                       <td>{game.status}</td>
                       <td>{game.duration}</td>
-                      <td>{game.betSize}</td>
-                      <td>{game.singleStep}</td>
-                      <td>{game.autoBetting}</td>
-                      <td>hserh</td>
-                      <td>{game.winner}</td>
-                      <td>
-                        {game.reactor === 'on' &&
-                          game.status !== 'closed' &&
-                          game.autoBetting === 'Да' && (
-                            <MDBBtn
-                              color="success"
-                              rounded
-                              size="sm"
-                              onClick={e => this.reactorSwitch(game, 'off')}
-                            >
-                              стоп
-                            </MDBBtn>
-                          )}
-                        {game.reactor === 'off' &&
-                          game.status !== 'closed' &&
-                          game.autoBetting === 'Да' && (
-                            <MDBBtn
-                              color="danger"
-                              rounded
-                              size="sm"
-                              onClick={e => this.reactorSwitch(game, 'on')}
-                            >
-                              пуск
-                            </MDBBtn>
-                          )}
-                        {!game.reactor && (
-                          <MDBAlert color="warning">Problems!</MDBAlert>
-                        )}
-                      </td>
                       <td>
                         {game.status === 'holded' && (
                           <React.Fragment>
                             <MDBBtn
-                              color="dark-green"
+                              color='dark-green'
                               rounded
-                              size="sm"
+                              size='sm'
                               onClick={e => this.statusChange(game, 'opened')}
                             >
-                              <MDBIcon icon="play" />
+                              <MDBIcon icon='play' />
                             </MDBBtn>
                             <MDBBtn
-                              color="blue-grey"
+                              color='blue-grey'
                               rounded
                               disabled
                               outline
-                              size="sm"
+                              size='sm'
                             >
-                              <MDBIcon icon="pause" />
+                              <MDBIcon icon='pause' />
                             </MDBBtn>
                             <MDBBtn
                               disabled
-                              color="pink"
+                              color='pink'
                               rounded
-                              size="sm"
+                              size='sm'
                               outline
                             >
-                              <MDBIcon icon="stop" />
+                              <MDBIcon icon='stop' />
                             </MDBBtn>
                           </React.Fragment>
                         )}
                         {game.status === 'opened' && (
                           <React.Fragment>
                             <MDBBtn
-                              color="dark-green"
+                              color='dark-green'
                               rounded
                               outline
                               disabled
-                              size="sm"
+                              size='sm'
                             >
-                              <MDBIcon icon="play" />
+                              <MDBIcon icon='play' />
                             </MDBBtn>
                             <MDBBtn
-                              color="blue-grey"
+                              color='blue-grey'
                               rounded
-                              size="sm"
+                              size='sm'
                               onClick={e => this.statusChange(game, 'paused')}
                             >
-                              <MDBIcon icon="pause" />
+                              <MDBIcon icon='pause' />
                             </MDBBtn>
                             <MDBBtn
-                              color="pink"
+                              color='pink'
                               rounded
-                              size="sm"
+                              size='sm'
                               onClick={e => this.statusChange(game, 'closed')}
                             >
-                              <MDBIcon icon="stop" />
+                              <MDBIcon icon='stop' />
                             </MDBBtn>
                           </React.Fragment>
                         )}
                         {game.status === 'paused' && (
                           <React.Fragment>
                             <MDBBtn
-                              color="dark-green"
+                              color='dark-green'
                               rounded
-                              size="sm"
+                              size='sm'
                               onClick={e => this.statusChange(game, 'opened')}
                             >
-                              <MDBIcon icon="play" />
+                              <MDBIcon icon='play' />
                             </MDBBtn>
                             <MDBBtn
-                              color="blue-grey"
+                              color='blue-grey'
                               rounded
                               outline
                               disabled
-                              size="sm"
+                              size='sm'
                             >
-                              <MDBIcon icon="pause" />
+                              <MDBIcon icon='pause' />
                             </MDBBtn>
                             <MDBBtn
-                              color="pink"
+                              color='pink'
                               rounded
-                              size="sm"
+                              size='sm'
                               onClick={e => this.statusChange(game, 'closed')}
                             >
-                              <MDBIcon icon="stop" />
+                              <MDBIcon icon='stop' />
                             </MDBBtn>
                           </React.Fragment>
                         )}
                         {game.status === 'closed' && (
                           <React.Fragment>
                             <MDBBtn
-                              color="red"
+                              color='red'
                               rounded
-                              size="sm"
+                              size='sm'
                               onClick={e =>
                                 this.deleteCurrentGame(game.humanId)
                               }
                             >
-                              <MDBIcon icon="times" />
+                              <MDBIcon icon='times' />
                             </MDBBtn>
                           </React.Fragment>
                         )}

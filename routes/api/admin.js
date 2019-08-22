@@ -9,71 +9,6 @@ const server = require('../../server.js');
 const Games = require('../../models/Games');
 const GameHistory = require('../../models/GameHistory');
 const Users = require('../../models/User');
-const AutoBetting = require('../../models/AutoBetting');
-
-// @route    POST api/admin/games/status-change
-// @desc     Changing game status
-// @access   Public
-
-router.post('/games/setAutobetting', async (req, res) => {
-  console.log('api admin games setAutobetting ');
-
-  const game = req.body.game;
-  const user = req.body.user;
-  const position = req.body.position;
-
-  console.log('autobetting switched on: ', game.humanId, user.nick, position);
-  try {
-    let newRecord = null;
-
-    if (!game) {
-      return res.status(400).json({
-        success: false,
-        error: 'No game to update'
-      });
-    } else {
-      const isRecord = await AutoBetting.findOne({
-        user,
-        game
-      });
-
-      if (isRecord && position == false) {
-        console.log('here');
-        await AutoBetting.findOneAndDelete({
-          user,
-          game
-        });
-      }
-
-      function getRandomArbitary(min, max) {
-        return Math.random() * (max - min) + min;
-      }
-
-      let clickTime = Math.round(getRandomArbitary(2, 9));
-
-      if (position) {
-        newRecord = new AutoBetting({
-          user,
-          game,
-          clickTime
-        });
-
-        await newRecord.save();
-      }
-    }
-
-    // autoexec(null, null, null);
-
-    res.json({
-      success: true,
-      humanId: game.humanId,
-      position
-    });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
 
 // @route    POST api/admin/games/status-change
 // @desc     Changing game status
@@ -114,105 +49,6 @@ router.post('/games/status-change', async (req, res) => {
   }
 });
 
-// @route    POST api/admin/games/reactor-switch
-// @desc     Changing game reactor state
-// @access   Public
-
-router.post('/games/reactor-switch', async (req, res) => {
-  console.log('api admin games reactor-switch ');
-
-  const game = req.body.game;
-  // const humanId = req.body.humanId;
-  const reactorSwitch = req.body.reactorSwitch;
-  console.log('reactor position: ', reactorSwitch);
-  console.log('reactor game: ', game);
-  console.log('reactor position: ', reactorSwitch);
-  // const status = req.body.status;
-
-  try {
-    let gameToReactor = null;
-
-    if (!game) {
-      return res.status(400).json({
-        success: false,
-        error: 'No game to update'
-      });
-    } else {
-      gameToReactor = await Games.findOneAndUpdate(
-        { humanId: game.humanId },
-        { reactor: reactorSwitch },
-        { upsert: false },
-        null
-      );
-
-      // реактор здесь
-
-      const gameToReactorOn = game._id;
-      const stuff = await Users.find({
-        stuff: 'yes'
-      });
-
-      if (reactorSwitch == 'on' && stuff.length > 0) {
-        function getRandomInt(min, max) {
-          return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        let newRecord = null;
-
-        stuff.forEach(async person => {
-          const isRecord = await AutoBetting.findOne({
-            user: person.id,
-            game: gameToReactorOn
-          });
-
-          if (isRecord) {
-            await AutoBetting.findOneAndDelete({
-              user: person.id,
-              game: gameToReactorOn
-            });
-          }
-
-          let clickTime = getRandomInt(2, 13);
-          newRecord = new AutoBetting({
-            user: person.id,
-            game: gameToReactorOn,
-            time: clickTime
-          });
-
-          await newRecord.save();
-        });
-      }
-
-      if (reactorSwitch == 'off') {
-        stuff.forEach(async person => {
-          const isRecord = await AutoBetting.findOne({
-            user: person.id,
-            game: gameToReactorOn
-          });
-
-          if (isRecord) {
-            await AutoBetting.findOneAndDelete({
-              user: person.id,
-              game: gameToReactorOn
-            });
-          }
-        });
-      }
-
-      // конец реактора
-
-      res.json({
-        success: true,
-        humanId: game.humanId,
-        reactor: reactorSwitch
-      });
-    }
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
-
 // @route    POST api/admin/games/create
 // @desc     Create new game
 // @access   Public
@@ -229,19 +65,16 @@ router.post('/games/create', async (req, res) => {
     humanId,
     marketPrice,
     currentPrice,
-    totalIncome,
     status,
     duration,
     caption,
     description,
-    autoBetting,
-    betSize,
-    singleStep,
-    winner,
-    winnerId,
+    link,
+    timesClicked,
+    discount,
     lastClick,
-    timer,
-    reactor
+    category,
+    timer
   } = req.body;
 
   function getRandomInt(min, max) {
@@ -252,45 +85,44 @@ router.post('/games/create', async (req, res) => {
     humanId = getRandomInt(10000, 90000);
   }
 
+  if (!marketPrice) {
+    marketPrice = 0;
+  }
+
   if (!currentPrice) {
-    currentPrice = 250;
+    currentPrice = 0;
   }
 
-  if (!singleStep) {
-    singleStep = 1;
+  if (!timesClicked) {
+    timesClicked = 0;
   }
 
-  if (!totalIncome) {
-    totalIncome = 0;
+  if (!category) {
+    category = 'other';
+  }
+
+  if (!discount) {
+    discount = 0;
   }
 
   if (!status) {
     status = 'holded';
   }
 
-  if (!winner) {
-    winner = '-';
-  }
-
-  if (!winnerId) {
-    winnerId = '000';
-  }
-
   if (!lastClick) {
     lastClick = Date.now();
-  }
-
-  if (!reactor) {
-    reactor = 'off';
   }
 
   if (!timer) {
     timer = 0;
   }
 
+  if (!link) {
+    link = '';
+  }
+
   try {
     let game = null;
-    let gamehistory = null;
 
     if (updateFlag) {
       game = await Games.findOneAndUpdate(
@@ -299,16 +131,8 @@ router.post('/games/create', async (req, res) => {
         { upsert: false },
         null
       );
-
-      gamehistory = await GameHistory.findOneAndUpdate(
-        { humanId: humanId },
-        req.body,
-        { upsert: false },
-        null
-      );
     } else {
       game = await Games.findOne({ humanId: humanId });
-      gamehistory = await GameHistory.findOne({ humanId: humanId });
     }
 
     if (updateFlag && !game) {
@@ -332,36 +156,16 @@ router.post('/games/create', async (req, res) => {
         humanId,
         marketPrice,
         currentPrice,
-        totalIncome,
         status,
         duration,
         caption,
         description,
-        autoBetting,
-        betSize,
-        singleStep,
-        winner,
-        winnerId,
+        link,
+        timesClicked,
+        discount,
         timer,
-        lastClick,
-        reactor
-      });
-
-      gamehistory = new GameHistory({
-        humanId,
-        marketPrice,
-        currentPrice,
-        totalIncome,
-        status,
-        duration,
-        caption,
-        description,
-        autoBetting,
-        betSize,
-        singleStep,
-        winner,
-        winnerId,
-        reactor
+        category,
+        lastClick
       });
     }
 
@@ -382,7 +186,6 @@ router.post('/games/create', async (req, res) => {
     }
 
     await game.save();
-    await gamehistory.save();
 
     res.json({ success: true, game: game });
   } catch (err) {
@@ -435,38 +238,6 @@ router.get('/games/list', async (req, res) => {
   }
 });
 
-// @route    GET api/admin/games/gamover
-// @desc     autobetting collection clear for ended game
-// @access   Public
-router.get('/games/gamover', async (req, res) => {
-  console.log('api admin gameover');
-  const gameOvered = req.body.game;
-
-  try {
-    let autobettings = await AutoBetting.find({
-      game: game.id
-    });
-
-    if (autobettings.length < 1) {
-      return res.status(400).json({
-        success: false,
-        error: 'No games in autobetting collection'
-      });
-    }
-    console.log('deleting game from autobettings: (gamover) ', game.id);
-    autobettings.forEach(async singleGame => {
-      await AutoBetting.findOneAndDelete({
-        game: singleGame.id
-      });
-    });
-
-    res.json({ success: true, games: games });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
-
 // @route    GET api/admin/users/list
 // @desc     Users list
 // @access   Public
@@ -496,23 +267,6 @@ router.post('/games/delete/:humanId', async (req, res) => {
   let humId = req.params.humanId;
   try {
     const gameInGames = await Games.findOneAndDelete({ humanId: humId });
-
-    // if (!gameInGames) {
-    //   res.status(404).send('Game not found. Nothing to delete!');
-    // }
-
-    const gameInGameHistory = await GameHistory.findOneAndUpdate(
-      { humanId: humId },
-      { status: 'inHistory' },
-      { upsert: false },
-      null
-    );
-
-    // if (!gameInGameHistory) {
-    //   res
-    //     .status(404)
-    //     .send('Game not found in GameHistory Collection. Nothing to change!');
-    // }
 
     res.json({ success: true, deleted: humId });
   } catch (err) {

@@ -127,12 +127,12 @@ export class Navigator extends Component {
           expand='md'
           fixed='top'
           scrolling
-          color='pink darken-4'
+          color='peach-gradient'
         >
           <MDBNavbarBrand href='/'>
             <strong className='white-text'>
               {/* <img src={logoSM2} className='img-fluid' alt='' /> */}
-              <h2>Sales Reactor</h2>
+              <h2>SamePlaces</h2>
             </strong>
           </MDBNavbarBrand>
           <MDBNavbarNav left>
@@ -152,10 +152,10 @@ export class Navigator extends Component {
             <MDBNavItem
               active={this.props.location.pathname.includes('/rules')}
             >
-              <MDBNavLink to='/about'>
+              {/* <MDBNavLink to='/about'>
                 <MDBIcon icon='envelope' className='d-inline-inline' />{' '}
                 <div className='d-none d-md-inline'>Правила</div>
-              </MDBNavLink>
+              </MDBNavLink> */}
             </MDBNavItem>
             {isLoggedIn && (
               <MDBNavItem>
@@ -182,34 +182,6 @@ export class Navigator extends Component {
             )}
             {isLoggedIn && (
               <React.Fragment>
-                <MDBNavItem>
-                  <WaveComponent
-                    onClick={this.props.toggleBalanceForm}
-                    tag='a'
-                    className='nav-link'
-                  >
-                    <MDBIcon icon='credit-card' className='d-inline-inline' />{' '}
-                    <div className='d-none d-md-inline'>
-                      Баланс: {balance.value}
-                    </div>
-                  </WaveComponent>
-                </MDBNavItem>
-                <MDBNavItem
-                  active={this.props.location.pathname.includes('/myGames')}
-                >
-                  <MDBNavLink to='about'>
-                    <MDBIcon icon='trophy' className='d-inline-inline' />{' '}
-                    <div className='d-none d-md-inline'>Мои игры</div>
-                  </MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem
-                  active={this.props.location.pathname.includes('/myGifts')}
-                >
-                  <MDBNavLink to='about'>
-                    <MDBIcon icon='candy-cane' className='d-inline-inline' />{' '}
-                    <div className='d-none d-md-inline'>Мои подарки</div>
-                  </MDBNavLink>
-                </MDBNavItem>
                 <MDBNavItem>
                   <WaveComponent
                     onClick={this.props.logout}
