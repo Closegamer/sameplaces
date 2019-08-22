@@ -80,7 +80,6 @@ let Filter = props => {
                 outline
                 className='btn-block z-depth-1'
                 type='reset'
-                onClick={handleSubmit}
               >
                 Очистить
               </MDBBtn>
@@ -101,7 +100,7 @@ Filter.defaultProps = {
 };
 
 Filter = reduxForm({
-  form: 'cat-health',
+  form: 'filter-form',
   destroyOnUnmount: false
 })(Filter);
 

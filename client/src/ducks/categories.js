@@ -128,7 +128,6 @@ export const createCategory = ({ bigPic, ...values }) => (
   dispatch,
   getState
 ) => {
-  console.log('duck categories: ', values);
   dispatch(createCategoryStart());
   let formData = new FormData();
 
