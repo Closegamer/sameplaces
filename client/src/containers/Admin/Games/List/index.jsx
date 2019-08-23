@@ -94,7 +94,7 @@ export class List extends Component {
                       <td>{game.discount}</td>
                       <td>{game.timesClicked}</td>
                       <td>{game.status}</td>
-                      <td>{game.duration}</td>
+                      <td>{game.humanDuration}</td>
                       <td>
                         {game.status === 'holded' && (
                           <React.Fragment>

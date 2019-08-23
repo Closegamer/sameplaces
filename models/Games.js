@@ -34,6 +34,10 @@ const GamesSchema = new mongoose.Schema(
       type: Number,
       required: false
     },
+    humanDuration: {
+      type: Date,
+      required: false
+    },
     discount: {
       type: Number,
       required: false
