@@ -52,9 +52,7 @@ export class Edit extends Component {
     if (humanId && loadedGame) {
       initialValues = loadedGame;
     } else {
-      initialValues = {
-        duration: '30'
-      };
+      initialValues = {};
     }
     return (
       <div className='monitor-cont'>
