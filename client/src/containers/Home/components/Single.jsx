@@ -142,9 +142,7 @@ class Single extends Component {
             <React.Fragment>
               <p>До окончания акции</p>
               <Countdown
-                date={
-                  Date.now() + (singleGame.duration - singleGame.timer) * 1000
-                }
+                date={Date.now() + singleGame.duration}
                 precision={3}
                 intervalDelay={0}
                 zeroPadTime={2}
