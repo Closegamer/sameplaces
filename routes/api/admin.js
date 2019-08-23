@@ -55,6 +55,7 @@ router.post('/games/status-change', async (req, res) => {
 // @access   Public
 router.post('/games/create', async (req, res) => {
   console.log('api admin games create');
+  console.log('from form : ', req.body);
 
   let updateFlag = false;
 
@@ -77,6 +78,10 @@ router.post('/games/create', async (req, res) => {
     category,
     timer
   } = req.body;
+
+  const preDuration = req.body.duration;
+  var myDate = new Date(preDuration);
+  duration = myDate.getTime();
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
