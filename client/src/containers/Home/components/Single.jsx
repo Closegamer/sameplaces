@@ -74,25 +74,33 @@ class Single extends Component {
       } else {
         return (
           <MDBContainer className='timerFiguresCont'>
-            <MDBRow className='timerLabel'>
-              <MDBCol size={4}>
-                <div className='text-center'>дней</div>
+            <MDBRow>
+              <MDBCol size={3} className='bord'>
+                <div className='timerLabel'>дней</div>
               </MDBCol>
-              <MDBCol size={4}>
-                <div className='text-center'>часов</div>
+              <MDBCol size={3} className='bord'>
+                <div className='timerLabel'>час</div>
               </MDBCol>
-              <MDBCol size={4}>
-                <div className='text-center'>минут</div>
+              <MDBCol size={3} className='bord'>
+                <div className='timerLabel'>мин</div>
               </MDBCol>
-              <MDBCol size={4}>
-                <div className='text-center'>секунд</div>
+              <MDBCol size={3} className='bord'>
+                <div className='timerLabel'>сек</div>
               </MDBCol>
             </MDBRow>
             <MDBRow>
-              <MDBCol className='countdownHrs'>{days}</MDBCol>
-              <MDBCol className='countdownHrs'>{hours}</MDBCol>
-              <MDBCol className='countdownMin'>{minutes}</MDBCol>
-              <MDBCol className='countdownSec'>{seconds}</MDBCol>
+              <MDBCol size={3} className='countdownHrs'>
+                {days}
+              </MDBCol>
+              <MDBCol size={3} className='countdownHrs'>
+                {hours}
+              </MDBCol>
+              <MDBCol size={3} className='countdownHrs'>
+                {minutes}
+              </MDBCol>
+              <MDBCol size={3} className='countdownHrs'>
+                {seconds}
+              </MDBCol>
             </MDBRow>
           </MDBContainer>
         );
@@ -120,7 +128,7 @@ class Single extends Component {
         <MDBCard className='face front'>
           <MDBCardBody>
             <img
-              className='card-img-top'
+              className='card-img-top pictSize'
               src={`${uploadDir}${singleGame.bigPic.guid}${
                 singleGame.bigPic.ext
               }`}
