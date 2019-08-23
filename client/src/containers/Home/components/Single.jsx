@@ -68,13 +68,16 @@ class Single extends Component {
       fontSize: 12
     };
 
-    const timerRenderer = ({ hours, minutes, seconds, completed }) => {
+    const timerRenderer = ({ days, hours, minutes, seconds, completed }) => {
       if (completed) {
         return <WhenTimerIsOver />;
       } else {
         return (
           <MDBContainer className='timerFiguresCont'>
             <MDBRow className='timerLabel'>
+              <MDBCol size={4}>
+                <div className='text-center'>дней</div>
+              </MDBCol>
               <MDBCol size={4}>
                 <div className='text-center'>часов</div>
               </MDBCol>
@@ -86,6 +89,7 @@ class Single extends Component {
               </MDBCol>
             </MDBRow>
             <MDBRow>
+              <MDBCol className='countdownHrs'>{days}</MDBCol>
               <MDBCol className='countdownHrs'>{hours}</MDBCol>
               <MDBCol className='countdownMin'>{minutes}</MDBCol>
               <MDBCol className='countdownSec'>{seconds}</MDBCol>
@@ -142,7 +146,7 @@ class Single extends Component {
             <React.Fragment>
               <p>До окончания акции</p>
               <Countdown
-                date={Date.now() + singleGame.duration}
+                date={singleGame.duration}
                 precision={3}
                 intervalDelay={0}
                 zeroPadTime={2}

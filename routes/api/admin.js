@@ -69,6 +69,7 @@ router.post('/games/create', async (req, res) => {
     currentPrice,
     status,
     duration,
+    humanDuration,
     caption,
     description,
     link,
@@ -79,9 +80,14 @@ router.post('/games/create', async (req, res) => {
     timer
   } = req.body;
 
-  const preDuration = req.body.duration;
-  var myDate = new Date(preDuration);
-  duration = myDate.getTime();
+  if (req.body.duration) {
+    const preDuration = req.body.duration;
+
+    const untilDate = new Date(preDuration);
+    duration = untilDate.getTime();
+
+    humanDuration = new Date(duration + 10800000);
+  }
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -127,6 +133,14 @@ router.post('/games/create', async (req, res) => {
     link = '';
   }
 
+  if (!duration) {
+    duration = 0;
+  }
+
+  if (!humanDuration) {
+    humanDuration = '';
+  }
+
   try {
     let game = null;
 
@@ -164,6 +178,7 @@ router.post('/games/create', async (req, res) => {
         currentPrice,
         status,
         duration,
+        humanDuration,
         caption,
         description,
         link,
