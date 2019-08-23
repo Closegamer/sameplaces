@@ -52,14 +52,14 @@ export class Playground extends Component {
     if (gamesLoadingInProgress) return <MDBSpinner />;
 
     const colStyle = {
-      minHeight: 550,
+      minHeight: 350,
       marginBottom: 25
     };
 
     return (
       <MDBContainer className='playground-cont' fluid>
         <MDBRow>
-          <MDBCol>
+          <MDBCol size={12}>
             <MDBRow>
               {allGames.map((game, index) => {
                 return (
@@ -67,19 +67,23 @@ export class Playground extends Component {
                     xs='12'
                     sm='4'
                     md='3'
-                    lg='2'
+                    lg='3'
                     xl='2'
                     key={index}
                     style={colStyle}
                   >
-                    <Single game={game} index={index} />
+                    <div className='cardWrapper'>
+                      <Single game={game} index={index} />
+                    </div>
                   </MDBCol>
                 );
               })}
             </MDBRow>
           </MDBCol>
-          <MDBCol sm='4' lg='2' xl='2'>
-            <Filter classes={classes} onSubmit={this.onFilter} />
+        </MDBRow>
+        <MDBRow>
+          <MDBCol xs='12' sm='6' md='6' lg='6' xl='2' className='filterClass'>
+            <Filter onSubmit={this.onFilter} />
           </MDBCol>
         </MDBRow>
       </MDBContainer>
