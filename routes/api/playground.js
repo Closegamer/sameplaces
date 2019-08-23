@@ -9,7 +9,10 @@ const Games = require('../../models/Games');
 // @access   Public
 router.get('/', async (req, res) => {
   try {
-    let games = await Games.find().select('-totalIncome');
+    const currentDate = Date.now();
+
+    let games = await Games.find({ duration: { $gte: currentDate } });
+
     if (games.length < 1) {
       return res.status(400).json({
         success: false,
