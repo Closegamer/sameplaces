@@ -52,7 +52,7 @@ export class Navigator extends Component {
         <MDBSideNav
           logo={logo}
           triggerOpening={this.state.leftMenuIsOpen}
-          bg='https://mdbootstrap.com/img/Photos/Others/sidenav4.jpg'
+          // bg='https://mdbootstrap.com/img/Photos/Others/sidenav4.jpg'
           mask='strong'
           hidden
           className={classes.root}

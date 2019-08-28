@@ -54,7 +54,7 @@ export class Playground extends Component {
     return (
       <MDBContainer className='playground-cont' fluid>
         <MDBRow>
-          <MDBCol size={12} className='text-center'>
+          <MDBCol xs='12' sm='9' md='9' lg='9' xl='10' className='text-center'>
             <MDBRow>
               {allGames.map((game, index) => {
                 return (
@@ -75,10 +75,12 @@ export class Playground extends Component {
               })}
             </MDBRow>
           </MDBCol>
+          <MDBCol xs='12' sm='3' md='3' lg='3' xl='2' className='text-center'>
+            <div className='filterClass text-center'>
+              <Filter onSubmit={this.onFilter} />
+            </div>
+          </MDBCol>
         </MDBRow>
-        <div className='filterClass'>
-          <Filter onSubmit={this.onFilter} />
-        </div>
       </MDBContainer>
     );
   }
