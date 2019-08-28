@@ -131,9 +131,12 @@ export class Navigator extends Component {
           scrolling
           color='peach-gradient'
         >
-          <MDBNavbarBrand href='/'>
-            <img src={logo} className='img-fluid logo' alt='' />
-          </MDBNavbarBrand>
+          <div className='logo-cont text-center'>
+            <MDBNavbarBrand href='/'>
+              <img src={logo} className='img-fluid logo' alt='SP-logo' />
+            </MDBNavbarBrand>
+          </div>
+
           <MDBNavbarNav left>
             {/* <MDBNavItem>
               <div
@@ -159,9 +162,7 @@ export class Navigator extends Component {
             {isLoggedIn && (
               <MDBNavItem>
                 <MDBNavLink to='#!'>
-                  <div className='d-none d-md-inline'>
-                    Вы вошли как {user.nick}
-                  </div>
+                  <div className='d-md-inline'>Вы вошли как {user.nick}</div>
                 </MDBNavLink>
               </MDBNavItem>
             )}
