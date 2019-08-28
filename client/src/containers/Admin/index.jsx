@@ -43,7 +43,7 @@ export class Admin extends Component {
             >
               <MDBNavLink to={`${match.path}/games`}>
                 <MDBBtn color='unique' className='admin-buttons'>
-                  Игры
+                  Акции
                 </MDBBtn>
               </MDBNavLink>
               <MDBNavLink to={`${match.path}/users`}>

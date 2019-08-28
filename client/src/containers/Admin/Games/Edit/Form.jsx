@@ -49,10 +49,36 @@ class Form extends React.Component {
         />
         <Field
           name='category'
-          component={TextField}
-          type='text'
-          label='Category'
+          component={SelectField}
+          label='Категория'
           group
+          options={[
+            {
+              text: 'men',
+              value: 'Для мужчин'
+            },
+            {
+              text: 'women',
+              value: 'Для женщин'
+            },
+            {
+              text: 'health',
+              value: 'Здоровье'
+            },
+            {
+              text: 'goods-home',
+              value: 'Товары для дома'
+            },
+            {
+              text: 'banks',
+              value: 'Банки'
+            },
+            {
+              text: 'other',
+              value: 'Другое'
+            }
+          ]}
+          search={false}
         />
         <Field
           name='link'
