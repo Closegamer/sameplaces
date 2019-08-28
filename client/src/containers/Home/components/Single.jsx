@@ -79,26 +79,26 @@ class Single extends Component {
                 <div className='timerLabel'>дней</div>
               </MDBCol>
               <MDBCol size={3} className='bord'>
-                <div className='timerLabel'>час</div>
+                <div className='timerLabel'>часов</div>
               </MDBCol>
               <MDBCol size={3} className='bord'>
-                <div className='timerLabel'>мин</div>
+                <div className='timerLabel'>минут</div>
               </MDBCol>
               <MDBCol size={3} className='bord'>
-                <div className='timerLabel'>сек</div>
+                <div className='timerLabel'>секунд</div>
               </MDBCol>
             </MDBRow>
             <MDBRow>
-              <MDBCol size={3} className='countdownHrs'>
+              <MDBCol size={3} className='countdownDays'>
                 {days}
               </MDBCol>
               <MDBCol size={3} className='countdownHrs'>
                 {hours}
               </MDBCol>
-              <MDBCol size={3} className='countdownHrs'>
+              <MDBCol size={3} className='countdownMin'>
                 {minutes}
               </MDBCol>
-              <MDBCol size={3} className='countdownHrs'>
+              <MDBCol size={3} className='countdownSec'>
                 {seconds}
               </MDBCol>
             </MDBRow>
@@ -129,18 +129,17 @@ class Single extends Component {
           <MDBCardBody>
             <img
               className='card-img-top pictSize'
-              src={`${uploadDir}${singleGame.bigPic.guid}${
-                singleGame.bigPic.ext
-              }`}
+              src={`${uploadDir}${singleGame.bigPic.guid}${singleGame.bigPic.ext}`}
               alt={singleGame.caption}
             />
+            <p>Организация:</p>
             <h4 className='font-weight-bold mb-3'>{singleGame.caption}</h4>
-            <p>Акция</p>
-            <p>{singleGame.description}</p>
-            <p>Скидка</p>
+            <p>Описание:</p>
             <p>
-              <span className={'discount'}>{singleGame.discount}%</span>
+              <b>{singleGame.description}</b>
             </p>
+            <p>Скидка:</p>
+            <div className='discount'>{singleGame.discount}%</div>
             {/* <a
               href='#!'
               className='rotate-btn'
@@ -152,7 +151,7 @@ class Single extends Component {
           </MDBCardBody>
           {singleGame.status === 'opened' && (
             <React.Fragment>
-              <p>До окончания акции</p>
+              <p>До окончания акции:</p>
               <Countdown
                 date={singleGame.duration}
                 precision={3}
@@ -187,9 +186,7 @@ class Single extends Component {
           <MDBCardUp>
             <img
               className='card-img-top'
-              src={`${uploadDir}${singleGame.bigPic.guid}${
-                singleGame.bigPic.ext
-              }`}
+              src={`${uploadDir}${singleGame.bigPic.guid}${singleGame.bigPic.ext}`}
               alt={singleGame.caption}
             />
           </MDBCardUp>
