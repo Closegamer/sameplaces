@@ -51,15 +51,10 @@ export class Playground extends Component {
 
     if (gamesLoadingInProgress) return <MDBSpinner />;
 
-    const colStyle = {
-      minHeight: 350,
-      marginBottom: 25
-    };
-
     return (
       <MDBContainer className='playground-cont' fluid>
         <MDBRow>
-          <MDBCol size={12}>
+          <MDBCol size={12} className='text-center'>
             <MDBRow>
               {allGames.map((game, index) => {
                 return (
@@ -70,7 +65,7 @@ export class Playground extends Component {
                     lg='3'
                     xl='2'
                     key={index}
-                    style={colStyle}
+                    className='responsiveJoe_col'
                   >
                     <div className='cardWrapper'>
                       <Single game={game} index={index} />
