@@ -75,7 +75,7 @@ export class Playground extends Component {
               })}
             </MDBRow>
           </MDBCol>
-          <MDBCol xs='12' sm='3' md='3' lg='3' xl='2' className='text-center'>
+          <MDBCol xs='12' sm='3' md='3' lg='3' xl='2'>
             <div className='filterClass text-center'>
               <Filter onSubmit={this.onFilter} />
             </div>
