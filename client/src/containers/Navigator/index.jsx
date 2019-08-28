@@ -6,8 +6,10 @@ import { toggleLoginForm, logout } from '../../ducks/auth';
 import { toggleBalanceForm } from '../../ducks/balance';
 import { withRouter } from 'react-router-dom';
 import injectSheet from 'react-jss';
-import logo from '../../img/logo.png';
+import logo from '../../img/logo_big_white.png';
 import WaveComponent from '../../components/WaveComponent';
+import './styles.css';
+
 import {
   MDBNavbarBrand,
   MDBInput,
@@ -130,10 +132,7 @@ export class Navigator extends Component {
           color='peach-gradient'
         >
           <MDBNavbarBrand href='/'>
-            <strong className='white-text'>
-              {/* <img src={logoSM2} className='img-fluid' alt='' /> */}
-              <h2>SamePlaces</h2>
-            </strong>
+            <img src={logo} className='img-fluid logo' alt='' />
           </MDBNavbarBrand>
           <MDBNavbarNav left>
             {/* <MDBNavItem>
