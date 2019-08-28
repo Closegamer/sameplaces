@@ -7,7 +7,7 @@ import injectSheet from 'react-jss';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import RecoveryForm from './RecoveryForm';
-import signInImg from './../../img/signin.jpg';
+// import signInImg from './../../img/signin.jpg';
 import './style.css';
 
 import { MDBContainer, MDBModal } from 'mdbreact';
@@ -123,8 +123,8 @@ const styles = {
   card: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    width: '100%',
-    backgroundImage: `url(${signInImg})`
+    width: '100%'
+    // backgroundImage: `url(${signInImg})`
   },
 
   link: {

@@ -6,7 +6,7 @@ import * as balanceActions from '../../ducks/balance';
 import injectSheet from 'react-jss';
 import Form from './Form';
 
-import signInImg from './../../img/signin.jpg';
+// import signInImg from './../../img/signin.jpg';
 
 import './style.css';
 
@@ -83,8 +83,8 @@ const styles = {
   card: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    width: '100%',
-    backgroundImage: `url(${signInImg})`
+    width: '100%'
+    // backgroundImage: `url(${signInImg})`
   },
 
   link: {
