@@ -8,11 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 let Form = props => {
   const { handleSubmit } = props;
-  handleChange = date => {
-    this.setState({
-      startDate: date
-    });
-  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -50,6 +45,13 @@ let Form = props => {
         component={TextField}
         type='text'
         label='Category'
+        group
+      />
+      <Field
+        name='duration'
+        component={TextField}
+        type='text'
+        label='Duration'
         group
       />
       <Field name='link' component={TextField} type='text' label='Link' group />
