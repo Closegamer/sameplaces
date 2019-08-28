@@ -65,6 +65,18 @@ let Filter = props => {
                 </label>
               }
             />
+            <Field
+              name='goods-home'
+              component={CheckBoxField}
+              label={
+                <label
+                  className='form-check-label white-text'
+                  htmlFor='goods-home'
+                >
+                  Товары для дома
+                </label>
+              }
+            />
           </MDBRow>
           <MDBRow className='d-flex align-items-center mb-4'>
             <div className='text-center mb-3 col-md-12'>
@@ -74,10 +86,10 @@ let Filter = props => {
                 className='btn-block z-depth-1'
                 type='submit'
               >
-                Отфильтровать
+                Фильтр
               </MDBBtn>
             </div>
-            <div className='text-center mb-3 col-md-12'>
+            {/* <div className='text-center mb-3 col-md-12'>
               <MDBBtn
                 color='white'
                 outline
@@ -86,7 +98,7 @@ let Filter = props => {
               >
                 Очистить
               </MDBBtn>
-            </div>
+            </div> */}
           </MDBRow>
         </div>
       </MDBCard>

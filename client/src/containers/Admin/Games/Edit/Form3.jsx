@@ -42,10 +42,36 @@ let Form = props => {
       />
       <Field
         name='category'
-        component={TextField}
-        type='text'
-        label='Category'
+        component={SelectField}
+        label='Категория'
         group
+        options={[
+          {
+            text: 'Для мужчин',
+            value: 'men'
+          },
+          {
+            text: 'Для женщин',
+            value: 'women'
+          },
+          {
+            text: 'Здоровье',
+            value: 'health'
+          },
+          {
+            text: 'Товары для дома',
+            value: 'goods-home'
+          },
+          {
+            text: 'Банки',
+            value: 'banks'
+          },
+          {
+            text: 'Другое',
+            value: 'other'
+          }
+        ]}
+        search={false}
       />
       <Field
         name='duration'
