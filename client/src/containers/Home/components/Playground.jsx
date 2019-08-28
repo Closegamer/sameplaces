@@ -81,11 +81,9 @@ export class Playground extends Component {
             </MDBRow>
           </MDBCol>
         </MDBRow>
-        <MDBRow>
-          <MDBCol xs='12' sm='6' md='6' lg='6' xl='2' className='filterClass'>
-            <Filter onSubmit={this.onFilter} />
-          </MDBCol>
-        </MDBRow>
+        <div className='filterClass'>
+          <Filter onSubmit={this.onFilter} />
+        </div>
       </MDBContainer>
     );
   }

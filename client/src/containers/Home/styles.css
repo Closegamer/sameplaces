@@ -76,6 +76,10 @@
 
 .filterClass {
   margin-top: 70px;
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .cardWrapper {
