@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBSpinner, MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import { bindActionCreators } from 'redux';
-import socketIOClient from 'socket.io-client';
 import * as gamesActions from '../../../../ducks/games';
 import * as playgroundActions from '../../../../ducks/playground';
 import * as categoriesActions from '../../../../ducks/categories';
@@ -30,7 +29,6 @@ export class Edit extends Component {
 
   onSubmit = values => {
     const { categoriesActions, history } = this.props;
-    console.log('on submit values ', values);
 
     return categoriesActions.createCategory(values).then(result => {
       if (result.success) {
