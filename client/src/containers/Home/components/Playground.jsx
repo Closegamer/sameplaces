@@ -41,7 +41,7 @@ export class Playground extends Component {
   };
 
   render() {
-    const { gamesLoadingInProgress, gamesLoadingError, classes } = this.props;
+    const { gamesLoadingInProgress, gamesLoadingError } = this.props;
 
     const allGames = this.props.playground;
 
