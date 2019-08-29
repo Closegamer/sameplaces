@@ -14,7 +14,8 @@ export class List extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: config.socketEndpoint
+      endpointHTTP: config.socketEndpointHTTP,
+      endpointHTTPS: config.socketEndpointHTTPS
     };
   }
   static propTypes = {};
@@ -28,7 +29,11 @@ export class List extends Component {
     const { actions } = this.props;
     actions.deleteCategory(humanId);
 
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
     socket.emit('categoryDemolition', humanId);
   };
 
