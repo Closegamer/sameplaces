@@ -25,6 +25,9 @@ body {
     'Helvetica Neue', Arial, sans-serif;
   font-weight: normal;
   background-color: white;
+  background-image: url('./img/bg_yellow.jpg');
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 h1,
