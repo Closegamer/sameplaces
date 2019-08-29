@@ -23,19 +23,28 @@ export class App extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: config.socketEndpoint
+      endpointHTTP: config.socketEndpointHTTP,
+      endpointHTTPS: config.socketEndpointHTTPS
     };
   }
 
   setAlert = msg => {
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
     socket.emit('alert', msg);
   };
 
   componentDidMount() {
     store.dispatch(loadUser());
 
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
 
     // setInterval(this.send(), 1000);
 

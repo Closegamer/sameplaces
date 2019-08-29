@@ -30,7 +30,8 @@ class Single extends Component {
 
   state = {
     flipped: false,
-    endpoint: config.socketEndpoint,
+    endpointHTTP: config.socketEndpointHTTP,
+    endpointHTTPS: config.socketEndpointHTTPS,
     switchOn: false
   };
 
@@ -45,7 +46,11 @@ class Single extends Component {
   };
 
   cardUpdateSocket = singleGame => {
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
     socket.emit('gameCardUpdate', singleGame);
   };
 
