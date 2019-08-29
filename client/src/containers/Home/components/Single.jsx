@@ -208,8 +208,8 @@ class Single extends Component {
                 </React.Fragment>
               )}
           </div>
-          <div className='contribute-cont'>
-            {singleGame.status !== 'closed' && (
+          {singleGame.status === 'opened' && (
+            <div className='contribute-cont'>
               <MDBBtn
                 color='success'
                 className='btn-wide'
@@ -217,19 +217,21 @@ class Single extends Component {
               >
                 Перейти
               </MDBBtn>
-            )}
-          </div>
-          <div className='message-cont'>
-            {singleGame.status === 'holded' && (
-              <MDBAlert color='warning'>СКОРО НАЧАЛО!</MDBAlert>
-            )}
-            {singleGame.status === 'paused' && (
-              <MDBAlert color='dark'>ОСТАНОВЛЕНО</MDBAlert>
-            )}
-            {singleGame.status === 'closed' && (
-              <MDBAlert color='danger'>АКЦИЯ ОКОНЧЕНА</MDBAlert>
-            )}
-          </div>
+            </div>
+          )}
+          {singleGame.status !== 'opened' && (
+            <div className='message-cont'>
+              {singleGame.status === 'holded' && (
+                <MDBAlert color='warning'>СКОРО НАЧАЛО!</MDBAlert>
+              )}
+              {singleGame.status === 'paused' && (
+                <MDBAlert color='dark'>ОСТАНОВЛЕНО</MDBAlert>
+              )}
+              {singleGame.status === 'closed' && (
+                <MDBAlert color='danger'>АКЦИЯ ОКОНЧЕНА</MDBAlert>
+              )}
+            </div>
+          )}
         </MDBCard>
         <MDBCard className='face back'>
           <MDBCardUp>
