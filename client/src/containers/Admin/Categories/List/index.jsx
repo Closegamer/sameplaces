@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MDBBtn, MDBSpinner, MDBAlert, MDBIcon } from 'mdbreact';
+import { MDBBtn, MDBSpinner, MDBIcon } from 'mdbreact';
 import { bindActionCreators } from 'redux';
-import * as gamesActions from '../../../../ducks/games';
-import * as playgroundActions from '../../../../ducks/playground';
 import * as categoriesActions from '../../../../ducks/categories';
 import socketIOClient from 'socket.io-client';
 import '../../styles.css';
@@ -78,9 +76,7 @@ export class List extends Component {
                               alt={category.NameEng}
                               width={90}
                               height={90}
-                              src={`${uploadDir}${category.bigPic.guid}${
-                                category.bigPic.ext
-                              }`}
+                              src={`${uploadDir}${category.bigPic.guid}${category.bigPic.ext}`}
                             />
                           )}
                       </td>

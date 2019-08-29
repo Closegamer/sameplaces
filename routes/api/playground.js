@@ -86,7 +86,6 @@ router.post('/filter', async (req, res) => {
       category: { $in: query }
     });
 
-    console.log(filteredGames);
     if (filteredGames.length > 0) {
       res.json({
         success: true,

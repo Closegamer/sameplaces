@@ -55,7 +55,6 @@ router.post('/games/status-change', async (req, res) => {
 // @access   Public
 router.post('/games/create', async (req, res) => {
   console.log('api admin games create');
-  console.log('from form : ', req.body);
 
   let updateFlag = false;
 
@@ -68,23 +67,31 @@ router.post('/games/create', async (req, res) => {
     marketPrice,
     currentPrice,
     status,
+    durationType,
     duration,
     humanDuration,
     caption,
     description,
     link,
     timesClicked,
+    discountType,
     discount,
+    promocode,
     lastClick,
     category,
     timer
   } = req.body;
 
-  if (req.body.duration) {
+  if (req.body.duration && req.body.durationType) {
     const preDuration = req.body.duration;
-
     const untilDate = new Date(preDuration);
     duration = untilDate.getTime();
+
+    if (req.body.durationType === 'endless') {
+      duration = untilDate.getTime() + 864000000000;
+    } else if (req.body.durationType === 'short') {
+      duration = untilDate.getTime();
+    }
 
     humanDuration = new Date(duration + 10800000);
   }
@@ -113,8 +120,16 @@ router.post('/games/create', async (req, res) => {
     category = 'other';
   }
 
+  if (!discountType) {
+    discountType = 'gift';
+  }
+
   if (!discount) {
     discount = 0;
+  }
+
+  if (!promocode) {
+    promocode = '-';
   }
 
   if (!status) {
@@ -131,6 +146,10 @@ router.post('/games/create', async (req, res) => {
 
   if (!link) {
     link = '';
+  }
+
+  if (!durationType) {
+    durationType = 'endless';
   }
 
   if (!duration) {
@@ -177,13 +196,16 @@ router.post('/games/create', async (req, res) => {
         marketPrice,
         currentPrice,
         status,
+        durationType,
         duration,
         humanDuration,
         caption,
         description,
         link,
         timesClicked,
+        discountType,
         discount,
+        promocode,
         timer,
         category,
         lastClick
