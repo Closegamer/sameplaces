@@ -34,12 +34,10 @@ const getBalanceFail = error => ({
 });
 
 export const getBalance = () => dispatch => {
-  console.log('balance duck: getBalance');
   dispatch(getBalanceStart());
   return axios
     .get('/api/users/balance')
     .then(response => {
-      console.log('response ', response);
       if (!response.data.success) {
         throw new Error(response.data.error);
       } else {
@@ -62,7 +60,6 @@ export const setBalanceSuccess = data => ({
 });
 
 export const setBalance = ({ balance }) => dispatch => {
-  // console.log('balance duck: setBalance: ', balance);
   return axios
     .post('/api/users/balance', {
       balance

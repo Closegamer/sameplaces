@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MDBBtn, MDBSpinner, MDBAlert, MDBIcon } from 'mdbreact';
+import { MDBBtn, MDBSpinner, MDBIcon } from 'mdbreact';
 import { bindActionCreators } from 'redux';
 import * as gamesActions from '../../../../ducks/games';
 import * as playgroundActions from '../../../../ducks/playground';
@@ -82,9 +82,7 @@ export class List extends Component {
                             alt={game.caption}
                             width={90}
                             height={90}
-                            src={`${uploadDir}${game.bigPic.guid}${
-                              game.bigPic.ext
-                            }`}
+                            src={`${uploadDir}${game.bigPic.guid}${game.bigPic.ext}`}
                           />
                         )}
                       </td>

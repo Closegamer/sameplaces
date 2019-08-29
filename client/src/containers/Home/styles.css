@@ -52,19 +52,6 @@
   left: 1.5rem;
 }
 
-.discount {
-  color: red;
-  font-size: 40px;
-  padding-top: 0;
-  padding-bottom: 0;
-  line-height: 30px;
-}
-
-.pictSize {
-  width: 100%;
-  height: 20%;
-}
-
 .filterClass {
   margin-top: 5px;
   min-width: 250px;
@@ -81,6 +68,10 @@
 @media (min-width: 576px) {
   .responsiveJoe_col {
     min-width: 270px;
+    margin-bottom: 240px;
+  }
+  .pict-cont {
+    max-height: 210px;
   }
 }
 
@@ -92,8 +83,83 @@
   .playground-cont {
     margin-top: 90px;
   }
+
+  .responsiveJoe_col {
+    min-width: 270px;
+    margin-bottom: 300px;
+  }
+
+  .pict-cont {
+    min-height: 235px;
+  }
 }
 
 .testMode {
   margin-top: 50px;
+}
+
+.pict-cont {
+  height: 166px;
+}
+
+.pictSize {
+  width: 100%;
+}
+
+.organisation-cont {
+  margin-top: 15px;
+  height: 100px;
+}
+
+.organisation {
+  line-height: 30px;
+  text-transform: uppercase;
+}
+
+.description-cont {
+  height: 100px;
+}
+
+.discount-cont {
+  height: 100px;
+}
+
+.discountGift {
+  color: red;
+  font-size: 40px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.discount {
+  color: red;
+  font-size: 40px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 30px;
+  font-weight: 800;
+}
+
+.promocode-cont {
+  height: 100px;
+}
+
+.promocode {
+  color: blue;
+  font-size: 22px;
+}
+
+.timer-cont {
+  height: 100px;
+  margin-top: -20px;
+}
+
+.contribute-cont {
+  height: 60px;
+}
+.btn-wide {
+  width: 90%;
 }

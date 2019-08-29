@@ -31,14 +31,12 @@ export class Playground extends Component {
 
     return actions.filter(categories).then(res => {
       if (res.success) {
-        console.log('filter form cleared');
       }
     });
   };
 
   dispatchTimers = () => {
     const { actions } = this.props;
-    console.log('checking for timers... from playground');
     actions.getTimers();
   };
 
@@ -55,7 +53,6 @@ export class Playground extends Component {
       <MDBContainer className='playground-cont' fluid>
         <MDBRow>
           <MDBCol xs='12' sm='9' md='9' lg='9' xl='10' className='text-center'>
-            {console.log('allGames', allGames)}
             {!allGames[0] ? (
               <div className='testMode'>
                 <h1>
