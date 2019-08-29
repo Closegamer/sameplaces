@@ -14,10 +14,11 @@ router.get('/', async (req, res) => {
     let games = await Games.find({ duration: { $gte: currentDate } });
 
     if (games.length < 1) {
-      return res.status(400).json({
-        success: false,
-        error: 'No games in collection'
-      });
+      console.log('no games in collection');
+      // return res.status(400).json({
+      //   success: false,
+      //   error: 'No games in collection'
+      // });
     }
 
     res.json({ success: true, playground: games });
