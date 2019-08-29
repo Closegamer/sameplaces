@@ -55,25 +55,35 @@ export class Playground extends Component {
       <MDBContainer className='playground-cont' fluid>
         <MDBRow>
           <MDBCol xs='12' sm='9' md='9' lg='9' xl='10' className='text-center'>
-            <MDBRow>
-              {allGames.map((game, index) => {
-                return (
-                  <MDBCol
-                    xs='12'
-                    sm='4'
-                    md='3'
-                    lg='3'
-                    xl='2'
-                    key={index}
-                    className='responsiveJoe_col'
-                  >
-                    <div className='cardWrapper'>
-                      <Single game={game} index={index} />
-                    </div>
-                  </MDBCol>
-                );
-              })}
-            </MDBRow>
+            {console.log('allGames', allGames)}
+            {!allGames[0] ? (
+              <div className='testMode'>
+                <h1>
+                  Площадка находится в тестовом режиме. <br />
+                  Просьба проявить терпение.
+                </h1>
+              </div>
+            ) : (
+              <MDBRow>
+                {allGames.map((game, index) => {
+                  return (
+                    <MDBCol
+                      xs='12'
+                      sm='4'
+                      md='3'
+                      lg='3'
+                      xl='2'
+                      key={index}
+                      className='responsiveJoe_col'
+                    >
+                      <div className='cardWrapper'>
+                        <Single game={game} index={index} />
+                      </div>
+                    </MDBCol>
+                  );
+                })}
+              </MDBRow>
+            )}
           </MDBCol>
           <MDBCol xs='12' sm='3' md='3' lg='3' xl='2'>
             <div className='filterClass text-center'>
