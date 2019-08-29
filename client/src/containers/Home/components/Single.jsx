@@ -35,7 +35,6 @@ class Single extends Component {
   };
 
   contribute = singleGame => {
-    console.log('contribute');
     const { playgroundActions } = this.props;
     playgroundActions.gameContribution(singleGame._id);
     this.goToLink(singleGame.link);
@@ -48,15 +47,13 @@ class Single extends Component {
   cardUpdateSocket = singleGame => {
     const socket = socketIOClient(this.state.endpoint);
     socket.emit('gameCardUpdate', singleGame);
-    // socket.emit('timerSync', singleGame);
   };
 
   goToLink = link => {
-    console.log(link);
+    window.location.href = link;
   };
 
   render() {
-    console.log('render Single');
     const singleGame = this.props.game;
 
     const index = this.props.index;
@@ -127,19 +124,53 @@ class Single extends Component {
       >
         <MDBCard className='face front'>
           <MDBCardBody>
-            <img
-              className='card-img-top pictSize'
-              src={`${uploadDir}${singleGame.bigPic.guid}${singleGame.bigPic.ext}`}
-              alt={singleGame.caption}
-            />
-            <p>Организация:</p>
-            <h4 className='font-weight-bold mb-3'>{singleGame.caption}</h4>
-            <p>Описание:</p>
-            <p>
-              <b>{singleGame.description}</b>
-            </p>
-            <p>Скидка:</p>
-            <div className='discount'>{singleGame.discount}%</div>
+            <div className='pict-cont'>
+              <img
+                className='card-img-top pictSize'
+                src={`${uploadDir}${singleGame.bigPic.guid}${singleGame.bigPic.ext}`}
+                alt={singleGame.caption}
+              />
+            </div>
+            <div className='organisation-cont'>
+              <p>Организация:</p>
+              <h4 className='font-weight-bold mb-3 organisation'>
+                {singleGame.caption}
+              </h4>
+            </div>
+            <div className='description-cont'>
+              <p>Описание:</p>
+              <p>
+                <b>{singleGame.description}</b>
+              </p>
+            </div>
+            <div className='discount-cont'>
+              {singleGame.discountType === 'figure' && (
+                <React.Fragment>
+                  <p>Скидка:</p>
+                  <div className='discount'>{singleGame.discount}%</div>
+                </React.Fragment>
+              )}
+              {singleGame.discountType === 'gift' && (
+                <React.Fragment>
+                  <p>Акция:</p>
+                  <div className='discountGift'>Подарок</div>
+                </React.Fragment>
+              )}
+            </div>
+            <div className='promocode-cont'>
+              {singleGame.promocode !== '-' && (
+                <React.Fragment>
+                  <p>Промокод:</p>
+                  <div className='promocode'>{singleGame.promocode}</div>
+                </React.Fragment>
+              )}
+              {singleGame.promocode === '-' && (
+                <React.Fragment>
+                  <p>Промокод:</p>
+                  <div className='promocode'>отсутствует</div>
+                </React.Fragment>
+              )}
+            </div>
             {/* <a
               href='#!'
               className='rotate-btn'
@@ -149,38 +180,51 @@ class Single extends Component {
               <MDBIcon icon='redo' /> Подробности...
             </a> */}
           </MDBCardBody>
-          {singleGame.status === 'opened' && (
-            <React.Fragment>
-              <p>До окончания акции:</p>
-              <Countdown
-                date={singleGame.duration}
-                precision={3}
-                intervalDelay={0}
-                zeroPadTime={2}
-                daysInHours={false}
-                controlled={false}
-                renderer={timerRenderer}
-              />
-
-              {singleGame.status !== 'closed' && (
-                <MDBBtn
-                  color='success'
-                  onClick={e => this.contribute(singleGame)}
-                >
-                  Перейти
-                </MDBBtn>
+          <div className='timer-cont'>
+            {singleGame.status === 'opened' &&
+              singleGame.durationType === 'short' && (
+                <React.Fragment>
+                  <p>До окончания акции:</p>
+                  <Countdown
+                    date={singleGame.duration}
+                    precision={3}
+                    intervalDelay={0}
+                    zeroPadTime={2}
+                    daysInHours={false}
+                    controlled={false}
+                    renderer={timerRenderer}
+                  />
+                </React.Fragment>
               )}
-            </React.Fragment>
-          )}
-          {singleGame.status === 'holded' && (
-            <MDBAlert color='warning'>СКОРО НАЧАЛО!</MDBAlert>
-          )}
-          {singleGame.status === 'paused' && (
-            <MDBAlert color='dark'>ОСТАНОВЛЕНО</MDBAlert>
-          )}
-          {singleGame.status === 'closed' && (
-            <MDBAlert color='danger'>АКЦИЯ ОКОНЧЕНА</MDBAlert>
-          )}
+            {singleGame.status === 'opened' &&
+              singleGame.durationType === 'endless' && (
+                <React.Fragment>
+                  <p>Это бессрочная акция</p>
+                </React.Fragment>
+              )}
+          </div>
+          <div className='contribute-cont'>
+            {singleGame.status !== 'closed' && (
+              <MDBBtn
+                color='success'
+                className='btn-wide'
+                onClick={e => this.contribute(singleGame)}
+              >
+                Перейти
+              </MDBBtn>
+            )}
+          </div>
+          <div className='message-cont'>
+            {singleGame.status === 'holded' && (
+              <MDBAlert color='warning'>СКОРО НАЧАЛО!</MDBAlert>
+            )}
+            {singleGame.status === 'paused' && (
+              <MDBAlert color='dark'>ОСТАНОВЛЕНО</MDBAlert>
+            )}
+            {singleGame.status === 'closed' && (
+              <MDBAlert color='danger'>АКЦИЯ ОКОНЧЕНА</MDBAlert>
+            )}
+          </div>
         </MDBCard>
         <MDBCard className='face back'>
           <MDBCardUp>

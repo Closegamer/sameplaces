@@ -182,9 +182,6 @@ export const filter = categories => (dispatch, getState) => {
 };
 
 export const refresh = games => (dispatch, getState) => {
-  console.log('playground refresh is here');
-
-  // const autobettingList = getState().playground.autobettingList[0];
   if (games) {
     return axios
       .post('/api/autobettings/refresh-game/', {
@@ -202,7 +199,6 @@ export const refresh = games => (dispatch, getState) => {
 };
 
 export const getTimers = () => (dispatch, getState) => {
-  console.log('=====================================> getTimers is here');
   return axios
     .post('/api/autobettings/get-timers', {
       status: 'opened'
@@ -224,7 +220,6 @@ export const getTimers = () => (dispatch, getState) => {
 };
 
 export const checkAutobettingSwitch = () => (dispatch, getState) => {
-  console.log('checkAutobettingSwitch is here');
   return axios
     .post('/api/autobettings/', {
       user: getState().auth.user
@@ -240,32 +235,26 @@ export const checkAutobettingSwitch = () => (dispatch, getState) => {
 };
 
 export const timerSync = game => (dispatch, getState) => {
-  console.log('================================== > timerSync is here ');
   return dispatch(timerSyncExecution(game));
 };
 
 export const gameCardUpdate = game => (dispatch, getState) => {
-  console.log('gameCardUpdate is here');
   return dispatch(gameCardUpdateExecution(game));
 };
 
 export const gameStatusChange = (game, newStatus) => (dispatch, getState) => {
-  console.log('gameStatusChange is here');
   return dispatch(gameStatusChangeExecution(game, newStatus));
 };
 
 export const gameAppear = newGame => (dispatch, getState) => {
-  console.log('gameAppear is here');
   return dispatch(gameAppearExecution(newGame));
 };
 
 export const gameDemolition = humanId => (dispatch, getState) => {
-  console.log('gameDemolition is here');
   dispatch(gameDemolitionExecution(humanId));
 };
 
 export const gameContribution = singleGame => (dispatch, getState) => {
-  console.log('gameContribution is here');
   dispatch(gameContributeStart());
   return axios
     .post('/api/playground/contribute', {
