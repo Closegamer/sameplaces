@@ -1,5 +1,5 @@
 {
-  "socketEndpoint": "sameplaces.ru:4001",
-  "clientPortEndpoint": "sameplaces.ru:5000",
-  "uploadDir": "http://sameplaces.ru:5000/api/upload/"
+  "socketEndpoint": "https://sameplaces.ru:4001",
+  "clientPortEndpoint": "https://sameplaces.ru:5000",
+  "uploadDir": "https://sameplaces.ru:5000/api/upload/"
 }
