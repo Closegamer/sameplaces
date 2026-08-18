@@ -1,6 +1,5 @@
 .playground-cont {
-  /* border: 1px solid green; */
-  margin-top: 30px;
+  margin-top: 50px;
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -10,20 +9,25 @@
 }
 
 .timerFiguresCont {
-  width: 80%;
-  font-size: 25px;
+  width: 90%;
+  font-size: 22px;
   color: black;
 }
 
 .timerLabel {
-  font-size: 10px;
+  font-size: 9px;
   align: 'center';
+}
+
+.countdownDays {
+  border: 1px solid grey;
+  padding-top: 1px;
+  padding-bottom: 3px;
+  border-radius: 4px;
 }
 
 .countdownHrs {
   border: 1px solid grey;
-  margin-right: 10px;
-  padding: 5px;
   padding-top: 1px;
   padding-bottom: 3px;
   border-radius: 4px;
@@ -31,9 +35,6 @@
 
 .countdownMin {
   border: 1px solid grey;
-
-  margin-right: 10px;
-  padding: 5px;
   padding-top: 1px;
   padding-bottom: 3px;
   border-radius: 4px;
@@ -41,7 +42,6 @@
 
 .countdownSec {
   border: 1px solid grey;
-  padding: 5px;
   padding-top: 1px;
   padding-bottom: 3px;
   border-radius: 4px;
@@ -52,7 +52,114 @@
   left: 1.5rem;
 }
 
+.filterClass {
+  margin-top: 5px;
+  min-width: 250px;
+  max-width: 350px;
+  border-radius: 4px;
+}
+
+.cardWrapper {
+  margin-bottom: 10px;
+  min-width: 260px;
+  max-width: 350px;
+}
+
+@media (min-width: 576px) {
+  .responsiveJoe_col {
+    min-width: 270px;
+    margin-bottom: 240px;
+  }
+  .pict-cont {
+    max-height: 210px;
+  }
+}
+
+@media (max-width: 575px) {
+  .filterClass {
+    margin-top: 25px;
+  }
+
+  .playground-cont {
+    margin-top: 90px;
+  }
+
+  .responsiveJoe_col {
+    min-width: 270px;
+    margin-bottom: 300px;
+  }
+
+  .pict-cont {
+    min-height: 235px;
+  }
+}
+
+.testMode {
+  margin-top: 50px;
+}
+
+.pict-cont {
+  height: 166px;
+}
+
+.pictSize {
+  width: 100%;
+}
+
+.organisation-cont {
+  margin-top: 15px;
+  height: 100px;
+}
+
+.organisation {
+  line-height: 30px;
+  text-transform: uppercase;
+}
+
+.description-cont {
+  height: 100px;
+}
+
+.discount-cont {
+  height: 100px;
+}
+
+.discountGift {
+  color: red;
+  font-size: 40px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
 .discount {
   color: red;
   font-size: 40px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 30px;
+  font-weight: 800;
+}
+
+.promocode-cont {
+  height: 100px;
+}
+
+.promocode {
+  color: blue;
+  font-size: 22px;
+}
+
+.timer-cont {
+  height: 100px;
+  margin-top: -20px;
+}
+
+.contribute-cont {
+  height: 60px;
+}
+.btn-wide {
+  width: 90%;
 }

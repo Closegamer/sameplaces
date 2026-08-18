@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { TextField, SelectField, FileField } from '../../../../fields';
+import { TextField, FileField } from '../../../../fields';
 import { MDBBtn } from 'mdbreact';
 import store from '../../../../store';
 

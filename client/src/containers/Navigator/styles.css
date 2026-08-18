@@ -1,0 +1,12 @@
+.logo {
+  width: 300px;
+}
+
+.logo-cont {
+}
+
+@media (max-width: 531px) {
+  .logo-cont {
+    width: 100%;
+  }
+}

@@ -67,16 +67,34 @@ router.post('/games/create', async (req, res) => {
     marketPrice,
     currentPrice,
     status,
+    durationType,
     duration,
+    humanDuration,
     caption,
     description,
     link,
     timesClicked,
+    discountType,
     discount,
+    promocode,
     lastClick,
     category,
     timer
   } = req.body;
+
+  if (req.body.duration && req.body.durationType) {
+    const preDuration = req.body.duration;
+    const untilDate = new Date(preDuration);
+    duration = untilDate.getTime();
+
+    if (req.body.durationType === 'endless') {
+      duration = untilDate.getTime() + 864000000000;
+    } else if (req.body.durationType === 'short') {
+      duration = untilDate.getTime();
+    }
+
+    humanDuration = new Date(duration + 10800000);
+  }
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -102,8 +120,16 @@ router.post('/games/create', async (req, res) => {
     category = 'other';
   }
 
+  if (!discountType) {
+    discountType = 'gift';
+  }
+
   if (!discount) {
     discount = 0;
+  }
+
+  if (!promocode) {
+    promocode = '-';
   }
 
   if (!status) {
@@ -120,6 +146,18 @@ router.post('/games/create', async (req, res) => {
 
   if (!link) {
     link = '';
+  }
+
+  if (!durationType) {
+    durationType = 'endless';
+  }
+
+  if (!duration) {
+    duration = 0;
+  }
+
+  if (!humanDuration) {
+    humanDuration = '';
   }
 
   try {
@@ -158,12 +196,16 @@ router.post('/games/create', async (req, res) => {
         marketPrice,
         currentPrice,
         status,
+        durationType,
         duration,
+        humanDuration,
         caption,
         description,
         link,
         timesClicked,
+        discountType,
         discount,
+        promocode,
         timer,
         category,
         lastClick

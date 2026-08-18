@@ -6,8 +6,10 @@ import { toggleLoginForm, logout } from '../../ducks/auth';
 import { toggleBalanceForm } from '../../ducks/balance';
 import { withRouter } from 'react-router-dom';
 import injectSheet from 'react-jss';
-import logo from '../../img/logo.png';
+import logo from '../../img/logo_big_white.png';
 import WaveComponent from '../../components/WaveComponent';
+import './styles.css';
+
 import {
   MDBNavbarBrand,
   MDBInput,
@@ -52,7 +54,7 @@ export class Navigator extends Component {
         <MDBSideNav
           logo={logo}
           triggerOpening={this.state.leftMenuIsOpen}
-          bg='https://mdbootstrap.com/img/Photos/Others/sidenav4.jpg'
+          // bg='https://mdbootstrap.com/img/Photos/Others/sidenav4.jpg'
           mask='strong'
           hidden
           className={classes.root}
@@ -129,12 +131,12 @@ export class Navigator extends Component {
           scrolling
           color='peach-gradient'
         >
-          <MDBNavbarBrand href='/'>
-            <strong className='white-text'>
-              {/* <img src={logoSM2} className='img-fluid' alt='' /> */}
-              <h2>SamePlaces</h2>
-            </strong>
-          </MDBNavbarBrand>
+          <div className='logo-cont text-center'>
+            <MDBNavbarBrand href='/'>
+              <img src={logo} className='img-fluid logo' alt='SP-logo' />
+            </MDBNavbarBrand>
+          </div>
+
           <MDBNavbarNav left>
             {/* <MDBNavItem>
               <div
@@ -160,9 +162,7 @@ export class Navigator extends Component {
             {isLoggedIn && (
               <MDBNavItem>
                 <MDBNavLink to='#!'>
-                  <div className='d-none d-md-inline'>
-                    Вы вошли как {user.nick}
-                  </div>
+                  <div className='d-md-inline'>Вы вошли как {user.nick}</div>
                 </MDBNavLink>
               </MDBNavItem>
             )}
