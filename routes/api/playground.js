@@ -9,12 +9,16 @@ const Games = require('../../models/Games');
 // @access   Public
 router.get('/', async (req, res) => {
   try {
-    let games = await Games.find().select('-totalIncome');
+    const currentDate = Date.now();
+
+    let games = await Games.find({ duration: { $gte: currentDate } });
+
     if (games.length < 1) {
-      return res.status(400).json({
-        success: false,
-        error: 'No games in collection'
-      });
+      console.log('no games in collection');
+      // return res.status(400).json({
+      //   success: false,
+      //   error: 'No games in collection'
+      // });
     }
 
     res.json({ success: true, playground: games });
@@ -62,11 +66,9 @@ router.post('/contribute', async (req, res) => {
 router.post('/filter', async (req, res) => {
   console.log('api playground filter ');
   let categories = req.body.categories;
-  console.log('categories: ', categories);
 
   categories = Object.keys(categories);
 
-  console.log(categories);
   const allCategories = await Categories.find();
 
   const query = [];
@@ -84,7 +86,6 @@ router.post('/filter', async (req, res) => {
       category: { $in: query }
     });
 
-    console.log(filteredGames);
     if (filteredGames.length > 0) {
       res.json({
         success: true,

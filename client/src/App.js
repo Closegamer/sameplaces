@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
 import Navigator from './containers/Navigator';
@@ -9,7 +9,6 @@ import setInterceptors from './utils/setInterceptors';
 import { loadUser } from './ducks/auth';
 import * as playgroundActions from './ducks/playground';
 import * as gameActions from './ducks/games';
-import * as categoriesActions from './ducks/categories';
 import { ToastContainer } from 'mdbreact';
 
 import './App.css';
@@ -24,19 +23,28 @@ export class App extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: config.socketEndpoint
+      endpointHTTP: config.socketEndpointHTTP,
+      endpointHTTPS: config.socketEndpointHTTPS
     };
   }
 
   setAlert = msg => {
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
     socket.emit('alert', msg);
   };
 
   componentDidMount() {
     store.dispatch(loadUser());
 
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
 
     // setInterval(this.send(), 1000);
 

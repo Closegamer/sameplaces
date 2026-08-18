@@ -1,21 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import emailValidator from 'email-validator';
 import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { MDBCard, MDBRow, MDBCol, MDBIcon, MDBBtn } from 'mdbreact';
-import { TextField, PassField, CheckBoxField } from '../../../fields';
+import { MDBCard, MDBRow, MDBBtn } from 'mdbreact';
+import { CheckBoxField } from '../../../fields';
 
 let Filter = props => {
-  const {
-    handleSubmit,
-    agree,
-    classes,
-    toggleFormType,
-    error,
-    submitting
-  } = props;
+  const { handleSubmit, classes } = props;
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
       <MDBCard className={classes.card}>
@@ -57,11 +48,92 @@ let Filter = props => {
               }
             />
             <Field
+              name='kids'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='kids'>
+                  Для детей
+                </label>
+              }
+            />
+            <Field
               name='banks'
               component={CheckBoxField}
               label={
                 <label className='form-check-label white-text' htmlFor='banks'>
-                  Банки
+                  Банки / кредиты
+                </label>
+              }
+            />
+            <Field
+              name='goods-home'
+              component={CheckBoxField}
+              label={
+                <label
+                  className='form-check-label white-text'
+                  htmlFor='goods-home'
+                >
+                  Товары для дома
+                </label>
+              }
+            />
+            <Field
+              name='sport'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='sport'>
+                  Спорт
+                </label>
+              }
+            />
+            <Field
+              name='china'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='china'>
+                  Товары из Китая
+                </label>
+              }
+            />
+            <Field
+              name='automoto'
+              component={CheckBoxField}
+              label={
+                <label
+                  className='form-check-label white-text'
+                  htmlFor='automoto'
+                >
+                  Авто / мотоциклы
+                </label>
+              }
+            />
+            <Field
+              name='vacation'
+              component={CheckBoxField}
+              label={
+                <label
+                  className='form-check-label white-text'
+                  htmlFor='vacation'
+                >
+                  Путешествия
+                </label>
+              }
+            />
+            <Field
+              name='IT'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='IT'>
+                  Телекоммуникации
+                </label>
+              }
+            />
+            <Field
+              name='other'
+              component={CheckBoxField}
+              label={
+                <label className='form-check-label white-text' htmlFor='other'>
+                  Другое
                 </label>
               }
             />
@@ -74,10 +146,10 @@ let Filter = props => {
                 className='btn-block z-depth-1'
                 type='submit'
               >
-                Отфильтровать
+                Фильтр
               </MDBBtn>
             </div>
-            <div className='text-center mb-3 col-md-12'>
+            {/* <div className='text-center mb-3 col-md-12'>
               <MDBBtn
                 color='white'
                 outline
@@ -86,7 +158,7 @@ let Filter = props => {
               >
                 Очистить
               </MDBBtn>
-            </div>
+            </div> */}
           </MDBRow>
         </div>
       </MDBCard>

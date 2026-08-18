@@ -30,12 +30,28 @@ const GamesSchema = new mongoose.Schema(
       type: String,
       required: false
     },
+    durationType: {
+      type: String,
+      required: false
+    },
     duration: {
       type: Number,
       required: false
     },
+    humanDuration: {
+      type: Date,
+      required: false
+    },
+    discountType: {
+      type: String,
+      required: false
+    },
     discount: {
       type: Number,
+      required: false
+    },
+    promocode: {
+      type: String,
       required: false
     },
     timesClicked: {

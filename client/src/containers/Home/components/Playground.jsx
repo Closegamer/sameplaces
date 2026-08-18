@@ -31,19 +31,17 @@ export class Playground extends Component {
 
     return actions.filter(categories).then(res => {
       if (res.success) {
-        console.log('filter form cleared');
       }
     });
   };
 
   dispatchTimers = () => {
     const { actions } = this.props;
-    console.log('checking for timers... from playground');
     actions.getTimers();
   };
 
   render() {
-    const { gamesLoadingInProgress, gamesLoadingError, classes } = this.props;
+    const { gamesLoadingInProgress, gamesLoadingError } = this.props;
 
     const allGames = this.props.playground;
 
@@ -51,35 +49,43 @@ export class Playground extends Component {
 
     if (gamesLoadingInProgress) return <MDBSpinner />;
 
-    const colStyle = {
-      minHeight: 550,
-      marginBottom: 25
-    };
-
     return (
       <MDBContainer className='playground-cont' fluid>
         <MDBRow>
-          <MDBCol>
-            <MDBRow>
-              {allGames.map((game, index) => {
-                return (
-                  <MDBCol
-                    xs='12'
-                    sm='4'
-                    md='3'
-                    lg='2'
-                    xl='2'
-                    key={index}
-                    style={colStyle}
-                  >
-                    <Single game={game} index={index} />
-                  </MDBCol>
-                );
-              })}
-            </MDBRow>
+          <MDBCol xs='12' sm='9' md='9' lg='9' xl='10' className='text-center'>
+            {!allGames[0] ? (
+              <div className='testMode'>
+                <h1>
+                  Площадка находится в тестовом режиме. <br />
+                  Просьба проявить терпение.
+                </h1>
+              </div>
+            ) : (
+              <MDBRow>
+                {allGames.map((game, index) => {
+                  return (
+                    <MDBCol
+                      xs='12'
+                      sm='4'
+                      md='3'
+                      lg='3'
+                      xl='2'
+                      key={index}
+                      className='responsiveJoe_col'
+                    >
+                      <div className='cardWrapper'>
+                        <Single game={game} index={index} />
+                      </div>
+                    </MDBCol>
+                  );
+                })}
+              </MDBRow>
+            )}
           </MDBCol>
-          <MDBCol sm='4' lg='2' xl='2'>
-            <Filter classes={classes} onSubmit={this.onFilter} />
+          <MDBCol xs='12' sm='3' md='3' lg='3' xl='2'>
+            <div className='filterClass text-center'>
+              <Filter onSubmit={this.onFilter} />
+            </div>
           </MDBCol>
         </MDBRow>
       </MDBContainer>

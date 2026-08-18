@@ -13,6 +13,8 @@
   "author": "1",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^4.3.3",
+    "@material-ui/pickers": "^3.2.3",
     "async-await-foreach": "^1.0.4",
     "await-foreach": "^0.0.2",
     "bcryptjs": "^2.4.3",
@@ -25,6 +27,7 @@
     "mongoose": "^5.5.1",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.2.1",
+    "react-datepicker": "^2.8.0",
     "request": "^2.88.0",
     "socket.io": "^2.2.0",
     "uuid": "^3.3.2"

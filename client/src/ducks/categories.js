@@ -104,7 +104,6 @@ export const loadCategories = () => (dispatch, getState) => {
   return axios
     .get('/api/admin/categories/list')
     .then(response => {
-      console.log('categories duck response', response.data.categories);
       dispatch(loadCategoriesSucceed(response.data.categories));
     })
     .catch(error => {

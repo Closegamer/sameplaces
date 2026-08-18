@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MDBBtn, MDBSpinner, MDBAlert, MDBIcon } from 'mdbreact';
+import { MDBBtn, MDBSpinner, MDBIcon } from 'mdbreact';
 import { bindActionCreators } from 'redux';
 import * as gamesActions from '../../../../ducks/games';
 import * as playgroundActions from '../../../../ducks/playground';
@@ -15,7 +15,8 @@ export class List extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: config.socketEndpoint
+      endpointHTTP: config.socketEndpointHTTP,
+      endpointHTTPS: config.socketEndpointHTTPS
     };
   }
   static propTypes = {};
@@ -29,7 +30,11 @@ export class List extends Component {
     const { actions } = this.props;
     actions.gameStatusChange(game, newStatus);
 
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
     const shuttle = [game, newStatus];
     socket.emit('gameStatusChange', shuttle);
   };
@@ -38,7 +43,11 @@ export class List extends Component {
     const { actions } = this.props;
     actions.deleteGame(humanId);
 
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
     socket.emit('gameDemolition', humanId);
   };
 
@@ -82,9 +91,7 @@ export class List extends Component {
                             alt={game.caption}
                             width={90}
                             height={90}
-                            src={`${uploadDir}${game.bigPic.guid}${
-                              game.bigPic.ext
-                            }`}
+                            src={`${uploadDir}${game.bigPic.guid}${game.bigPic.ext}`}
                           />
                         )}
                       </td>
@@ -94,7 +101,7 @@ export class List extends Component {
                       <td>{game.discount}</td>
                       <td>{game.timesClicked}</td>
                       <td>{game.status}</td>
-                      <td>{game.duration}</td>
+                      <td>{game.humanDuration}</td>
                       <td>
                         {game.status === 'holded' && (
                           <React.Fragment>
