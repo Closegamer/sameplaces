@@ -13,7 +13,8 @@ export class Edit extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: config.socketEndpoint
+      endpointHTTP: config.socketEndpointHTTP,
+      endpointHTTPS: config.socketEndpointHTTPS
     };
   }
   static propTypes = {};
@@ -29,7 +30,11 @@ export class Edit extends Component {
 
   onSubmit = values => {
     const { actions, history } = this.props;
-    const socket = socketIOClient(this.state.endpoint);
+    const endpoint =
+      window.location.protocol === 'https:'
+        ? this.state.endpointHTTPS
+        : this.state.endpointHTTPS;
+    const socket = socketIOClient(endpoint);
 
     return actions.createGame(values).then(result => {
       if (result.success) {

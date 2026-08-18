@@ -222,9 +222,9 @@ export const gameStatusChange = (game, newStatus) => (dispatch, getState) => {
     })
     .then(response => {
       dispatch(gameStatusChangeSucceed(response.data));
-      if (newStatus === 'paused' || newStatus === 'closed') {
-        dispatch(gameReactorSwitch(game.humanId, 'off'));
-      }
+      // if (newStatus === 'paused' || newStatus === 'closed') {
+      //   dispatch(gameReactorSwitch(game.humanId, 'off'));
+      // }
       return response.data;
     })
     .catch(error => {

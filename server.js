@@ -2,13 +2,33 @@ const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
 const fileUpload = require('express-fileupload');
-const socketIO = require('socket.io');
+
+const fs = require('fs');
+
+const sslOptions = {
+  key: fs.readFileSync('ssl/sameplaces.ru.key'),
+  cert: fs.readFileSync('ssl/sameplaces.ru.chained.crt')
+};
+
+const ioServer = require('socket.io');
+
 const socketPort = 4001;
+const socketSSLPort = 4002;
+
 const app = express();
+
 const http = require('http');
-const server = http.createServer(app);
-const io = socketIO(server);
-const cron = require('node-cron');
+const https = require('https');
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(sslOptions);
+
+const io = new ioServer();
+
+io.attach(httpServer);
+io.attach(httpsServer);
+// httpServer.listen(socketPort);
+// httpsServer.listen(socketSSLPort);
 
 // Connect Database
 connectDB();
@@ -88,8 +108,12 @@ io.on('connection', socket => {
   });
 });
 
-server.listen(socketPort, () =>
-  console.log(`Sockets started on port ${socketPort}`)
+httpServer.listen(socketPort, () =>
+  console.log(`Sockets for HTTP started on port ${socketPort}`)
+);
+
+httpsServer.listen(socketSSLPort, () =>
+  console.log(`Sockets for HTTPS started on port ${socketSSLPort}`)
 );
 
 module.exports = app;
